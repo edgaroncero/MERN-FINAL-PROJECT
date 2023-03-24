@@ -6,7 +6,7 @@ const eventSchema = new Schema(
     {
         id: { type: String },
         title: { type: String, required: true },
-        category: {type: String },
+        category: {type: String, enum: ['Socio Cultural', 'Entertainment', 'Gatronomic', 'Sports and Adventures', 'Childrens Activities', 'Beauty and Wellness', 'Educative']},
         location: {type: String },
         city: {type: String },
         province: {type: String},
@@ -19,7 +19,7 @@ const eventSchema = new Schema(
         link: { type: String },
         artist: { type: String },
         img: { type: String },
-        
+        users: [{ type: mongoose.Types.ObjectId, ref: 'User'}]
     },
     {
         timestamps: true,

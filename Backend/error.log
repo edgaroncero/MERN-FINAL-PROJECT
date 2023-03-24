@@ -8,3 +8,5 @@ Route not found /eventos 2023-03-24T14:03:56.145Z
 Route not found /events/city/Madrid 2023-03-24T14:03:59.053Z
 Route not found /eventos 2023-03-24T14:04:47.525Z
 Route not found /evemts/eventos 2023-03-24T14:05:03.830Z
+Route not found /events 2023-03-24T16:50:30.998Z
+Route not found /events/:id 2023-03-24T16:50:37.065Z

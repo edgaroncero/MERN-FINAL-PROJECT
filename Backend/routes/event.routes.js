@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
     try {
     const { limit, offset } = req.query;
 
-    return Event.find()
+    return Event.find().populate('users')
     .then(events => {
         if ( offset && limit ){
         return res.status(200).json(events.slice(offset, parseInt(limit) + parseInt(offset)));
@@ -126,7 +126,7 @@ router.get('/city/:city', async (req, res, next) => {
 
 // POST
 router.post('/', async (req, res, next) => { 
-    const { title, category, location , city, province, lat, long, dtstart, dtend, price, info,  link, artist, img } = req.body;
+    const { title, category, location , city, province, lat, long, dtstart, dtend, price, info,  link, artist, img, users } = req.body;
     const event = {
         title, 
         category, 
@@ -141,7 +141,8 @@ router.post('/', async (req, res, next) => {
         info,  
         link, 
         artist, 
-        img
+        img,
+        users: []
     };
     try{
         const newEvent = new Event(event);
@@ -152,5 +153,51 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+// DELETE 
+
+router.delete('/:id', async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        await Event.findByIdAndDelete(id);
+        return res.status(200).json('Event deleted!');
+    } catch (error) {
+        return next(error);
+    }
+});
+
+// PUT
+
+router.put('/:id', async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const eventEdited = new Event(req.body);
+        eventEdited._id = id;
+        const eventUpdated = await Event.findByIdAndUpdate(id, eventEdited);
+        if (eventUpdated) {
+            return res.status(200).json(eventEdited);
+        } else {
+            return res.status(404).json('No event found by this id')
+        }
+        
+    } catch (error) {
+        return next(error);
+    }
+})
+
+// ADD USER 
+
+router.put('/users/add-user', async (req, res, next) => {
+    try {
+        const { userId, eventId } = req.body;
+        const userEvent = await Event.findByIdAndUpdate(
+            eventId,
+            { $push: { users: userId } },
+            { new: true }
+        )  ;
+        return res.status(200).json(userEvent);
+    } catch (error) {
+            return next(error);    
+    }
+})
 
 module.exports = router;
