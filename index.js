@@ -14,7 +14,9 @@ const logError = require('./utils/log');
 
 
 //routes
-const userRouter = require('./routes/userRoutes');
+const listadoroutes = require('./routes/user.listadoroutes');
+const userRouter = require('./routes/user.routes');
+
 
 //función conecta con MongoDB
 connect();
@@ -24,6 +26,11 @@ const server = express();
 //Middlewares
 server.use(express.json());
 server.use(express.urlencoded({extended: true}));
+
+//routes
+server.use('/user', userRouter);
+server.use('/listado', listadoroutes);
+
 
 server.use(
   session({
@@ -36,16 +43,13 @@ server.use(
   })
 );
 
-server.use(passport.initialize())
+server.use(passport.initialize());
 server.use(passport.session()); 
 
 server.get('/', (req, res) => {
-  res.send('<h1>Trabajo final em grupo!</h1>');
-  res.sendFile(__dirname + '/index.html');
+  res.send('Trabajo final em grupo!');
 });
 
-//routes
-server.use('/users', userRouter);
 
 // Error control
 server.use('*', (req, res, next) => {

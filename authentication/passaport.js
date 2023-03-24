@@ -10,8 +10,8 @@ passport.use(
   'register', 
   new LocalStrategy(
     {
-      usernameField: 'email', // Elegimos el campo email del req.body
-      passwordField: 'password', // Elegimos el campo password del req.body
+      usernameField: 'email',
+      passwordField: 'password',
       passReqToCallback: true, // Hace que el callback reciba la Request (req)
     },
     

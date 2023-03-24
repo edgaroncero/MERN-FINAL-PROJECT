@@ -1,13 +1,12 @@
-// Archivo research.seed.js
 
 const mongoose = require('mongoose');
 
 // Imporatmos el modelo en este nuevo archivo.
 const User = require('../models/User');
 
-//const { DB_URL } = require('../utils/db');
+const { DB_URL } = require('../utils/db');
 
-const researchList = [
+const UserList = [
     {
         name: 'Ruth',
         apellido: 'Sanchez',
@@ -28,7 +27,7 @@ const researchList = [
     
   ];
   
-  const researchDocuments =  researchList.map(item => new Research(item));
+  const researchUser =  UserList.map(item => new User(item));
   
   // nueva coneccion a base de datos
   // pero nos desconectaremos tras insertar los documentos
@@ -38,19 +37,19 @@ const researchList = [
       useUnifiedTopology: true,
     })
     .then(async () => {
-          // Utilizando Research.find() obtendremos un array con todos los pesquisadores de la db
-      const allResearch = await Research.find();
+          // Utilizando allResearchUser.find() obtendremos un array con todos los usuarios de la db
+      const allResearchUser = await User.find();
           
           //dropearemos la colección
-      if (allResearch.length) {
-        await Research.collection.drop(); //La función drop borra la colección
+      if (allResearchUser.length) {
+        await User.collection.drop(); //La función drop borra la colección
       }
     })
     .catch((err) => console.log(`Error deleting data: ${err}`))
     .then(async () => {
-          // Una vez vaciada la db de los persquisadores, usaremos el array reserachDocuments
+          // Una vez vaciada la db de los persquisadores, usaremos el array
           // para llenar nuestra base de datos con todas los pesquisadores.
-          await Research.insertMany(researchDocuments);
+          await User.insertMany(researchUser);
       })
     .catch((err) => console.log(`Error creating data: ${err}`))
       // Por último nos desconectaremos de la DB.

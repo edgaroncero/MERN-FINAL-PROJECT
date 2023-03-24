@@ -1,14 +1,22 @@
 const express = require('express');
+connect = require('mongoose');
 const passport = require('passport');
+const User = require('../models/User');
 
-
-
-//router
 const router = express.Router();
 
+ router.get('/', async (req, res, next) => {
+	try {
+		const users = await User.find();;
+// 	console.log(req.user);
+		return res.status(200).json(users)
+	} catch (error) {
+		return next(error)
+	}
+});
+ 
 router.post('/register', (req, res, next) => {
-    // Invocamos a la autenticación de Passport
-
+  
     const done = (error, user) => {
         if (error) {
           return next(error);
@@ -63,4 +71,3 @@ router.post('/register', (req, res, next) => {
     });
     
     module.exports = router;
-    
