@@ -1,7 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
 const Event = require('../models/Event');
+
+const fileMiddleware = require('../middlewares/file.middleware')
+const imageToUri = require('image-to-uri');
+const fs = require('fs');
 
 const router = express.Router();
 
@@ -14,7 +17,7 @@ router.get('/', async (req, res, next) => {
     try {
     const { limit, offset } = req.query;
 
-    return Event.find().populate('users')
+    return Event.find()
     .then(events => {
         if ( offset && limit ){
         return res.status(200).json(events.slice(offset, parseInt(limit) + parseInt(offset)));
@@ -125,8 +128,13 @@ router.get('/city/:city', async (req, res, next) => {
 //});  
 
 // POST
-router.post('/', async (req, res, next) => { 
-    const { title, category, location , city, province, lat, long, dtstart, dtend, price, info,  link, artist, img, users } = req.body;
+
+// IMÁGENES - MULTER
+router.post('/', [fileMiddleware.upload.single('img')], async (req, res, next) => {
+    
+    try { 
+    const { title, category = 'Entertainment', location , city, province, lat, long, dtstart, dtend, price, info,  link, artist, users } = req.body;
+    const imgEvent = req.file ? req.file.filename : null;
     const event = {
         title, 
         category, 
@@ -141,13 +149,80 @@ router.post('/', async (req, res, next) => {
         info,  
         link, 
         artist, 
-        img,
+        img: imgEvent,
         users: []
     };
-    try{
+    
         const newEvent = new Event(event);
         const eventCreated = await newEvent.save();        
         return res.status(201).json(eventCreated);
+    } catch (error) {
+        next(error);
+    }
+});
+
+//IMÁGENES - IMAGE TO URI
+router.post('/create', [fileMiddleware.upload.single('img')], async (req, res, next) => {
+    
+    try { 
+        const imgEvent = req.file.path ? req.file.path : null;
+        const { title, category = 'Entertainment', location , city, province, lat, long, dtstart, dtend, price, info,  link, artist, users } = req.body;
+        const event = {
+            title, 
+            category, 
+            location , 
+            city, 
+            province, 
+            lat, 
+            long, 
+            dtstart, 
+            dtend, 
+            price, 
+            info,  
+            link, 
+            artist, 
+            img: imageToUri(imgEvent),
+            users: []
+        };
+
+            const newEvent = new Event(event);
+            const eventCreated = await newEvent.save(); 
+            await fs.unlinkSync(imgEvent);      
+            return res.status(201).json(eventCreated);
+    } catch (error) {
+        next(error);
+    }
+});
+
+//IMÁGENES - CLOUDINARY
+
+router.post('/add', [fileMiddleware.upload.single('img'), fileMiddleware.uploadToCloudinary], async (req, res, next) => {
+    
+    try { 
+        const cloudinaryURL = req.file ? req.file_url : null;
+        const { title, category = 'Entertainment', location , city, province, lat, long, dtstart, dtend, price, info,  link, artist, users } = req.body;
+    
+        const event = {
+            title, 
+            category, 
+            location , 
+            city, 
+            province, 
+            lat, 
+            long, 
+            dtstart, 
+            dtend, 
+            price, 
+            info,  
+            link, 
+            artist, 
+            img: cloudinaryURL,
+            users: []
+        };
+
+            const newEvent = new Event(event);
+            const eventCreated = await newEvent.save();        
+            return res.status(201).json(eventCreated);
     } catch (error) {
         next(error);
     }
