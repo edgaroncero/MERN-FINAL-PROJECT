@@ -1,14 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import ReactDOM from 'react-dom/client';
+import { Link, Route, Routes } from 'react-router-dom'
 import './App.css'
+import { Login, Register, Profile, Home, Events, Footer, Navbar, News, Search } from './config/pages-export'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      
+    <div className='main-container'>
+    <header>
+       <Navbar />
+    </header>
+    <main>
+      <Search />
+      <Events />
+      <News />
+    </main>
     </div>
   )
 }
