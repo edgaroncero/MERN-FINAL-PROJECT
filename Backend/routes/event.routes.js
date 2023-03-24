@@ -6,7 +6,7 @@ const Event = require('../models/Event');
 const router = express.Router();
 
 
-// QUERYS
+// GET QUERYS
 
     //Events List
 router.get('/', async (req, res, next) => {
@@ -64,7 +64,7 @@ router.get('/dates', async (req, res, next) => {
     }
 });
 
-// PARAMS
+// GET PARAMS
 
     //Events by ID
 router.get('/:id', async (req, res, next) => {
@@ -123,9 +123,6 @@ router.get('/city/:city', async (req, res, next) => {
 //        return res.status(500).json(err);
 //    }
 //});  
-
-
-//POST 
 
 // POST
 router.post('/', async (req, res, next) => { 
