@@ -1,5 +1,5 @@
 
-const mongoose = require('mongoose');
+/*const mongoose = require('mongoose');
 
 // Imporatmos el modelo en este nuevo archivo.
 const User = require('../models/User');
@@ -53,4 +53,4 @@ const UserList = [
       })
     .catch((err) => console.log(`Error creating data: ${err}`))
       // Por último nos desconectaremos de la DB.
-    .finally(() => mongoose.disconnect());
+    .finally(() => mongoose.disconnect()); */

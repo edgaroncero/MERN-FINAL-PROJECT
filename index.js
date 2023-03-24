@@ -28,7 +28,7 @@ server.use(express.json());
 server.use(express.urlencoded({extended: true}));
 
 //routes
-server.use('/user', userRouter);
+server.use('/users', userRouter);
 server.use('/listado', listadoroutes);
 
 
