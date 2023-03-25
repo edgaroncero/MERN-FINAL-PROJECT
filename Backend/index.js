@@ -4,12 +4,19 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 
+//authentication
+const session = require('express-session');
+const passport = require('passport');
+require('./authentication/passaport');
+
+
 //Utils
 const {connect} = require('./utils/db');
 const logError = require('./utils/log');
 
 //Routes
 const eventRoutes = require('./routes/event.routes');
+const userRouter = require('./routes/user.routes');
 
 //Configuración del servidor
 connect();
@@ -26,6 +33,26 @@ const server = express();
 
     // Enrutado
     server.use('/events', eventRoutes);
+    server.use('/users', userRouter);
+
+    server.use(
+     session({
+        secret: process.env.SESSION_SECRET || 'proyecto_node', // ¡Este secreto tendremos que cambiarlo en producción!
+        resave: false, // Solo guardará la sesión si hay cambios en ella.
+        saveUninitialized: false, // Lo usaremos como false debido a que gestionamos nuestra sesión con Passport
+        cookie: {
+            maxAge: 3600000 // Milisegundos de duración de nuestra cookie, en este caso será una hora.
+        },
+        })
+    );
+
+    server.use(passport.initialize());
+      server.use(passport.session()); 
+    
+    server.get('/', (req, res) => {
+        res.send('Trabajo final em grupo!');
+    });
+
 
     // Control de errores
     server.use('*', (req, res, next) => {

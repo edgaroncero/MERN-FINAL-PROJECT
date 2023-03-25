@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const Event = require('../models/Event');
 
-const { DB_URL } = require('../db');
+const { DB_URL } = require('../utils/db');
 
 const events = [
         {
             title: "Cirque du Soleil",
-            category: "Socio-Cultural",
+            category: "Socio Cultural",
             location: "Wizink Center",
             lat: 40.43566138304336, 
             long: -3.6706989926280778,
@@ -24,7 +24,7 @@ const events = [
         },
         {
             title: "Cirque du Soleil",
-            category: "Socio-Cultural",
+            category: "Socio Cultural",
             location: "Wizink Center",
             lat: 40.43566138304336, 
             long: -3.6706989926280778,
