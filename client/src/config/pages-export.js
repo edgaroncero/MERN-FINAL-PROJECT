@@ -7,6 +7,6 @@ import Events from "../components/Events";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import News from "../components/News";
-import Search from "../components/Search";
+import Formulario from "../components/Formulario";
 
-export { Login, Register, Profile, Home, Events, Footer, Navbar, News, Search }
+export { Login, Register, Profile, Home, Events, Footer, Navbar, News, Formulario}

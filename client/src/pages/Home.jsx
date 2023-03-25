@@ -1,8 +1,13 @@
 import React from 'react'
+import { Events, News, Formulario } from '../config/pages-export'
 
 function Home() {
   return (
-    <div>Home</div>
+    <div className='home-container'>
+      <Formulario />
+      <Events />
+      <News />
+    </div>
   )
 }
 

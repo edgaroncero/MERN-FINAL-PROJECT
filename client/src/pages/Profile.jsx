@@ -1,8 +1,11 @@
-import React from 'react'
+import { imgProfile } from "../config/icons-export"
 
 function Profile () {
   return (
-    <div>Profile</div>
+    <div className="profile-container">
+      <h1>Bienvenido, username!</h1>
+      <img src={imgProfile}/>
+    </div>
   )
 }
 

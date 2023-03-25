@@ -1,21 +1,28 @@
-import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Login () {
   return (
     
     <div className='container' >
-         <div className='container_main' >
-            <div className='container_login' >
-                <div className='container_title'>
-                   <h1>Inicia sesión</h1>
-                 <p>¿No tienes una cuenta? Registrate</p>
+         <div className='main' >
+            <div className='login' >
+                <div className='title'>
+                   <h2>Iniciar sesión</h2>
+                 <p>Te damos la bienvenida!</p>
                 </div>
-                <div className='container_logindiv'>
-                    <input ></input>
-                    <input ></input>
+                <div className='logindiv'>
+                <form>
+                     <label>Nombre de Usuario</label>
+                     <input type="text"   />
+                     <label>Contraseña</label>
+                     <input type="text"   />
                     <button>Iniciar sesión</button>
-                </div>
-                <div className='container_foot' >
+                </form>     
+                <p>¿No tienes una cuenta?
+                   <Link to='/registrate'>
+                      Registrate
+                   </Link>
+                 </p>        
                 </div>
             </div>
          </div>
