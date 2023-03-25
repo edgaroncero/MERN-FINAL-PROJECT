@@ -17,7 +17,7 @@ router.get('/', async (req, res, next) => {
 	}
 });
 
-router.get('/:id', async (req, res) => {
+/* router.get('/:id', async (req, res) => {
 	const id = req.params.id;
 	try {
 		const research = await ListadoUser.findById(id);
@@ -30,8 +30,8 @@ router.get('/:id', async (req, res) => {
 		return res.status(500).json(err);
 	}
 });
-
-router.get('/name/:name', async (req, res) => {
+ */
+/* router.get('/name/:name', async (req, res) => {
 	const {name} = req.params;
 
 	try {
@@ -41,14 +41,19 @@ router.get('/name/:name', async (req, res) => {
 		return res.status(500).json(err);
 	}
 });
-
+ */
 router.post('/create', [fileMiddleware.upload.single('picture'), fileMiddleware.uploadToCloudinary], async (req, res, next) => {
 	try {
 		const cloudinaryUrl = req.file_url ? req.file_url : null;
-		const {name, email } = req.body; 
+		const {name, apellidos, ubicacion, fecha, email, imagen } = req.body; 
 		const research = {
 			name,
+			apellidos,
+			ubicacion,
+			fecha,
             email,
+			imagen,
+
 			picture: cloudinaryUrl
 	};
 		const newResearch = new ListadoUser(research); 
@@ -59,7 +64,7 @@ router.post('/create', [fileMiddleware.upload.single('picture'), fileMiddleware.
 	}
 });
 
-
+/* 
 ///DELETE ///
 
 router.delete('/:id', async (req, res, next) => {
@@ -88,6 +93,6 @@ router.put('/:id', async (req, res, next) => {
 	} catch (error) {
 		return next(error);
 	}
-	});
+	}); */
 
 module.exports = router;

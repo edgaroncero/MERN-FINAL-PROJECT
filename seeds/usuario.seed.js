@@ -1,33 +1,38 @@
-
-/*const mongoose = require('mongoose');
+/* 
+const mongoose = require('mongoose');
 
 // Imporatmos el modelo en este nuevo archivo.
-const User = require('../models/User');
+const ListadoUser = require('../models/ListadoUser');
 
 const { DB_URL } = require('../utils/db');
 
 const UserList = [
     {
         name: 'Ruth',
-        apellido: 'Sanchez',
+        apellidos: 'Sanchez',
+        ubicacion:'Madrid',
         fechaNacimiento: '050295',
-        paswword: '123',
-        localización:'Madrid',
         email: 'ruthsanchez@yahoo.com',
+       /*  imagen:
+        picture:
+        paswword: '123',    
     },
 
     {
         name: 'Lucas',
         apellido: 'Abuquerque',
+        ubicacion:'Salamanca',
         fechaNacimiento: '250281',
-        paswword: '456',
-        localización:'Salamanca',
         email: 'lucas2824@hotmail.com',
-        },
+        paswword: '456',
+         /*  imagen:
+        picture:
+        paswword: '123',   
+    },
     
   ];
   
-  const researchUser =  UserList.map(item => new User(item));
+  const researchUser =  UserList.map(item => new ListadoUser(item));
   
   // nueva coneccion a base de datos
   // pero nos desconectaremos tras insertar los documentos
@@ -38,18 +43,18 @@ const UserList = [
     })
     .then(async () => {
           // Utilizando allResearchUser.find() obtendremos un array con todos los usuarios de la db
-      const allResearchUser = await User.find();
+      const allResearchUser = await ListadoUser.find();
           
           //dropearemos la colección
       if (allResearchUser.length) {
-        await User.collection.drop(); //La función drop borra la colección
+        await ListadoUser.collection.drop(); //La función drop borra la colección
       }
     })
     .catch((err) => console.log(`Error deleting data: ${err}`))
     .then(async () => {
           // Una vez vaciada la db de los persquisadores, usaremos el array
           // para llenar nuestra base de datos con todas los pesquisadores.
-          await User.insertMany(researchUser);
+          await ListadoUser.insertMany(researchUser);
       })
     .catch((err) => console.log(`Error creating data: ${err}`))
       // Por último nos desconectaremos de la DB.
