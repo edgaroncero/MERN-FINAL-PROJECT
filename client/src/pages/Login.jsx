@@ -12,10 +12,14 @@ function Login () {
                 </div>
                 <div className='logindiv'>
                 <form>
+                   <div>
                      <label>Nombre de Usuario</label>
                      <input type="text"   />
+                   </div>
+                   <div>
                      <label>Contraseña</label>
                      <input type="text"   />
+                   </div>
                     <button>Iniciar sesión</button>
                 </form>     
                 <p>¿No tienes una cuenta?

@@ -1,7 +1,18 @@
 import '../styles/page-styles.css'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 
 function  Register () {
+   const [username, setUsername] = useState('')
+   const [email, setEmail] = useState('')
+   const [password, setPassword] = useState('')
+   const [repeatPassword, setRepeatPassword] = useState('')
+   const [errors, setErrors] = useState('')
+
+   const handleSubmit = (e) => {
+      e.preventDefault()
+   }
+
   return (
     <div>
        <div className='container' >
@@ -17,13 +28,34 @@ function  Register () {
                 </div>
                   <div className='logindiv'>
                     <form>
-                       <label className='form-text'>Nombre de Usuario</label>
-                       <input type="text"   />
-                       <label className='form-text'>Email</label>
-                       <input type="text"   />
-                       <label className='form-text' >Contraseña</label>
-                       <input type="text"  />
-                       <button type='submit' > Crear cuenta </button>
+                    <div>
+                       <label className='form-text'>
+                       Nombre de Usuario
+                       <input type="text" value={username} onChange={e => setUsername(e.target.value)}  />
+                       </label>
+                    </div>
+
+                    <div>
+                        <label className='form-text'>
+                         Email
+                         <input type="text" value={email} onChange={e => setEmail(e.target.value)}   />
+                        </label>
+                    </div>
+
+                    <div>
+                       <label className='form-text'>
+                       Contraseña
+                       <input type="text" value={password} onChange={e => setPassword(e.target.value)}  />
+                       </label>
+                    </div>
+
+                    <div>
+                       <label className='form-text'>
+                       Repetir contraseña
+                       <input type="text" value={repeatPassword} onChange={e => setRepeatPassword(e.target.value)}  />
+                       </label>
+                    </div>
+                       <button type='submit'>Crear cuenta</button>
                     </form>
                   </div>
                 </div>
