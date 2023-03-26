@@ -1,4 +1,34 @@
-const express = require('express');
+const express = require("express");
+const router = express.Router();
+//importamos las funciones del controlador y del middleware
+const { register, login, logout } = require("../authentication/jwt");
+/* const { isAuth } = require("../../middlewares/auth.middleware") */
+
+router.post("/register", register);
+router.post("/login", login);
+//le añadimos el middleware para que solo sea accesible si el user esta logueado
+router.post("/logout", logout)
+
+module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* const express = require('express');
 const passport = require('passport');
 const User = require('../models/User');
 
@@ -15,14 +45,12 @@ const router = express.Router();
 });
  
 router.post('/register', (req, res, next) => {
-  
     const done = (error, user) => {
         if (error) {
           return next(error);
         }
     
         user.password = null;
-    
         req.logIn(user, (error) => {
             // Si hay un error logeando al usuario, resolvemos el controlador
             if (error) {
@@ -32,7 +60,6 @@ router.post('/register', (req, res, next) => {
             return res.status(201).json(user);
         });
       };
-    
       const register = passport.authenticate('register', done);
       register(req); // ¡No te olvides de invocarlo aquí!
   });
@@ -69,4 +96,4 @@ router.post('/register', (req, res, next) => {
       });
     });
     
-    module.exports = router;
+    module.exports = router; */

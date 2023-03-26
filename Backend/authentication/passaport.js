@@ -1,4 +1,5 @@
-const passport = require('passport');
+/* 
+const session = require('express-session');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
@@ -10,12 +11,13 @@ passport.use(
   'register', 
   new LocalStrategy(
     {
+      fullName: 'fullName',
       usernameField: 'email',
       passwordField: 'password',
       passReqToCallback: true, // Hace que el callback reciba la Request (req)
     },
     
-    async (req, email, password, done) => {
+    async (req, fullName, email, password, done) => {
       try {
         // Primero buscamos si el usuario existe en nuestra DB
         const previousUser = await User.findOne({ email: email });
@@ -28,11 +30,12 @@ passport.use(
 
         // Si no existe el usuario, vamos a "hashear" el password antes de registrarlo
         const pwdHash = await bcrypt.hash(password, saltRounds);
-
+  
         // Creamos el nuevo user y lo guardamos en la DB
         const newUser = new User({
+          fullName: fullName,
           email: email,
-          password: pwdHash,
+          password: pwdHash
         });
 
         const savedUser = await newUser.save();
@@ -106,4 +109,4 @@ passport.deserializeUser(async (userId, done) => {
     return done(err);
   }
 });
-
+ */

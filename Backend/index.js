@@ -5,9 +5,10 @@ const path = require('path');
 
 
 //authentication
-const session = require('express-session');
-const passport = require('passport');
-require('./authentication/passaport');
+require("jsonwebtoken");
+/* const session = require('express-session'); */
+/* const passport = require('passport'); */
+/* require('./authentication/passaport'); */
 
 
 //Utils
@@ -28,6 +29,15 @@ const server = express();
     // CONVERTIR A JSON LA REQ
     server.use(express.json());
     server.use(express.urlencoded({extended: true}));
+    server.use((req, res, next) => {
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+        res.header('Access-Control-Allow-Credentials', true);
+        res.header('Access-Control-Allow-Headers', 'Content-Type');
+        next();
+      });
+
+/*       serv.set("secretKey", "nodeRestApi");  */
+
     // Acceso público a las imágenes de PUBLIC
     //server.use(express.static(path.join(__dirname, 'public')));
 
@@ -35,7 +45,7 @@ const server = express();
     server.use('/events', eventRoutes);
     server.use('/users', userRouter);
 
-    server.use(
+    /* server.use(
      session({
         secret: process.env.SESSION_SECRET || 'proyecto_node', // ¡Este secreto tendremos que cambiarlo en producción!
         resave: false, // Solo guardará la sesión si hay cambios en ella.
@@ -45,9 +55,9 @@ const server = express();
         },
         })
     );
-
-    server.use(passport.initialize());
-      server.use(passport.session()); 
+ */
+    /* server.use(passport.initialize());
+      server.use(passport.session());  */
     
     server.get('/', (req, res) => {
         res.send('Trabajo final em grupo!');
