@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 //importamos las funciones del controlador y del middleware
 const { register, login, logout } = require("../authentication/jwt");
+const User = require("../models/User");
 /* const { isAuth } = require("../../middlewares/auth.middleware") */
 
 router.post("/register", register);

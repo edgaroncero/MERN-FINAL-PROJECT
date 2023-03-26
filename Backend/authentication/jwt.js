@@ -7,15 +7,21 @@ const jwt = require("jsonwebtoken");
 const register = async (req, res, next) => {
   try {
     const newUser = new User();
+    newUser.name = req.body.name;
+    newUser.surname = req.body.surname;
+    newUser.address = req.body.adress;
+    newUser.fechaNacimiento = new Date(req.body.fechaNacimiento),
+   /*  newUser.imagen = req.body.imagen; */
     newUser.email = req.body.email;
-    newUser.password = req.body.password;
-   
+    const pwdHash = await bcrypt.hash(req.body.password, 10);
+    newUser.password = pwdHash;
+  
     const userDb = await newUser.save();
     
     return res.json({
       status: 201,
       message: 'Usuario registrado',
-      data: null
+      data: userDb
     });
   } catch (err) {
     return next(err);
@@ -42,11 +48,18 @@ const login = async (req, res, next) => {
       //devolvemos el usuario y el token.
       return res.json({
         status: 200,
-        message: HTTPSTATUSCODE[200],
-        data: { user: userInfo, token: token },
+        message: 'Login con éxito',
+        data: { 
+          id: userInfo._id, 
+          name: userInfo.name,
+          surname: userInfo.surname,
+          address: userInfo.address,
+          fechaNacimiento: userInfo.fechaNacimiento,
+         /*  imagen: userInfo.imagen, */
+          token: token },
       });
     } else {
-      return res.json({ status: 400, message: HTTPSTATUSCODE[400], data: null });
+      return res.json({ status: 400, message: 'Bad request', data: null });
     }
   } catch (err) {
     return next(err);
@@ -57,7 +70,7 @@ const logout = (req, res, next) => {
   try {
     return res.json({
       status: 200,
-      message: HTTPSTATUSCODE[200],
+      message: 'Logout ok',
       token: null
     });
   } catch (err) {

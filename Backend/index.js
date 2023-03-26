@@ -1,7 +1,7 @@
-require ('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
 const path = require('path');
+require ('dotenv').config();
+const mongoose = require('mongoose');
 
 
 //authentication
@@ -17,7 +17,7 @@ const logError = require('./utils/log');
 
 //Routes
 const eventRoutes = require('./routes/event.routes');
-const userRouter = require('./routes/user.routes');
+const userRoutes = require('./routes/user.routes');
 
 //Configuración del servidor
 connect();
@@ -36,14 +36,14 @@ const server = express();
         next();
       });
 
-/*       serv.set("secretKey", "nodeRestApi");  */
+      //serv.set("secretKey", "nodeRestApi");
 
     // Acceso público a las imágenes de PUBLIC
     //server.use(express.static(path.join(__dirname, 'public')));
 
     // Enrutado
     server.use('/events', eventRoutes);
-    server.use('/users', userRouter);
+    server.use('/users', userRoutes);
 
     /* server.use(
      session({
@@ -69,12 +69,15 @@ const server = express();
         const msg = 'Route not found';
         const error = new Error('Route not found)');
         error.status = 404;
-        next(error);
-        const log = `${msg} ${req.path} ${new Date().toISOString()}\n`;
+        const log = `${msg}
+        ${req.path}
+        ${new Date().toISOString()}\n`;
         logError(log);
-        res.status(404).send(msg);
-    });
-
+      });
+      server.use((error, req, res, next) => {
+        return res.status(error.status || 500).json(error.message || 'Unexpected error');
+      });
+      
 
 server.listen(PORT, () =>{
     console.log(`Server runing in http://localhost:${PORT}`)
