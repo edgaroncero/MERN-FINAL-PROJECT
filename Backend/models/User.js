@@ -4,11 +4,15 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
     {
-        id: { type: String },
         name: { type: String},
-        location: {type: String },
+        lastname: {type: String },
         city: {type: String },
-        province: {type: String},
+        birth: {type: String},
+        email: { type: String, required: true },
+        password: {type: String,  required: true},
+        isAdmin: { type: Boolean },
+        img: { type: String },
+        events: [{ type: mongoose.Types.ObjectId, ref: 'Event'}]
     },
     {
         timestamps: true,

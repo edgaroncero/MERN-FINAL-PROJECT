@@ -1,8 +1,7 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const Event = require('../models/Event');
 
-const fileMiddleware = require('../middlewares/file.middleware')
+const fileMiddleware = require('../middlewares/file.middleware');
 const imageToUri = require('image-to-uri');
 const fs = require('fs');
 
@@ -56,13 +55,13 @@ router.get('/dates', async (req, res, next) => {
     try {
         let events = [];
         if ( dtstart && dtend ) {
-            events = await Event.find( {dtstart : { $lte: dtstart}, dtend: {$gte: dtend}  });
+            events = await Event.find( {dtstart : { $gte: dtstart}, dtend: {$lte: dtend}  });
         }else {
             events = await Event.find();
         }
         return res.status(200).json(events);
 
-    } catch (err) {
+    } catch (error) {
         return next(error);
     }
 });
@@ -130,76 +129,76 @@ router.get('/city/:city', async (req, res, next) => {
 // POST
 
 // IMÁGENES - MULTER
-router.post('/', [fileMiddleware.upload.single('img')], async (req, res, next) => {
-    
-    try { 
-    const { title, category = 'Entertainment', location , city, province, lat, long, dtstart, dtend, price, info,  link, artist, users } = req.body;
-    const imgEvent = req.file ? req.file.filename : null;
-    const event = {
-        title, 
-        category, 
-        location , 
-        city, 
-        province, 
-        lat, 
-        long, 
-        dtstart, 
-        dtend, 
-        price, 
-        info,  
-        link, 
-        artist, 
-        img: imgEvent,
-        users: []
-    };
-    
-        const newEvent = new Event(event);
-        const eventCreated = await newEvent.save();        
-        return res.status(201).json(eventCreated);
-    } catch (error) {
-        next(error);
-    }
-});
-
-//IMÁGENES - IMAGE TO URI
-router.post('/create', [fileMiddleware.upload.single('img')], async (req, res, next) => {
-    
-    try { 
-        const imgEvent = req.file.path ? req.file.path : null;
-        const { title, category = 'Entertainment', location , city, province, lat, long, dtstart, dtend, price, info,  link, artist, users } = req.body;
-        const event = {
-            title, 
-            category, 
-            location , 
-            city, 
-            province, 
-            lat, 
-            long, 
-            dtstart, 
-            dtend, 
-            price, 
-            info,  
-            link, 
-            artist, 
-            img: imageToUri(imgEvent),
-            users: []
-        };
-
-            const newEvent = new Event(event);
-            const eventCreated = await newEvent.save(); 
-            await fs.unlinkSync(imgEvent);      
-            return res.status(201).json(eventCreated);
-    } catch (error) {
-        next(error);
-    }
-});
+//router.post('/', [fileMiddleware.upload.single('img')], async (req, res, next) => {
+//    
+//    try { 
+//    const { title, category = 'Entertainment', location , city, province, lat, long, dtstart, dtend, price, info,  link, artist, users } = req.body;
+//    const imgEvent = req.file ? req.file.filename : null;
+//    const event = {
+//        title, 
+//        category, 
+//        location , 
+//        city, 
+//        province, 
+//        lat, 
+//        long, 
+//        dtstart, 
+//        dtend, 
+//        price, 
+//        info,  
+//        link, 
+//        artist, 
+//        img: imgEvent,
+//        users: []
+//    };
+//    
+//        const newEvent = new Event(event);
+//        const eventCreated = await newEvent.save();        
+//        return res.status(201).json(eventCreated);
+//    } catch (error) {
+//        return next(error);
+//    }
+//});
+//
+////IMÁGENES - IMAGE TO URI
+//router.post('/create', [fileMiddleware.upload.single('img')], async (req, res, next) => {
+//    
+//    try { 
+//        const imgEvent = req.file.path ? req.file.path : null;
+//        const { title, category = 'Entertainment', location , city, province, lat, long, dtstart, dtend, price, info,  link, artist, users } = req.body;
+//        const event = {
+//            title, 
+//            category, 
+//            location , 
+//            city, 
+//            province, 
+//            lat, 
+//            long, 
+//            dtstart, 
+//            dtend, 
+//            price, 
+//            info,  
+//            link, 
+//            artist, 
+//            img: imageToUri(imgEvent),
+//            users: []
+//        };
+//
+//            const newEvent = new Event(event);
+//            const eventCreated = await newEvent.save(); 
+//            await fs.unlinkSync(imgEvent);      
+//            return res.status(201).json(eventCreated);
+//    } catch (error) {
+//       return next(error);
+//    }
+//});
 
 //IMÁGENES - CLOUDINARY
 
-router.post('/add', [fileMiddleware.upload.single('img'), fileMiddleware.uploadToCloudinary], async (req, res, next) => {
+router.post('/add', [fileMiddleware.parser.single('img')], async (req, res, next) => {
     
     try { 
-        const cloudinaryURL = req.file ? req.file_url : null;
+        const cloudinaryURL = req.file.path ? req.file.path : null;
         const { title, category = 'Entertainment', location , city, province, lat, long, dtstart, dtend, price, info,  link, artist, users } = req.body;
     
         const event = {
@@ -224,7 +223,7 @@ router.post('/add', [fileMiddleware.upload.single('img'), fileMiddleware.uploadT
             const eventCreated = await newEvent.save();        
             return res.status(201).json(eventCreated);
     } catch (error) {
-        next(error);
+       return next(error);
     }
 });
 
@@ -242,12 +241,17 @@ router.delete('/:id', async (req, res, next) => {
 
 // PUT
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', [fileMiddleware.parser.single('img')], async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const eventEdited = new Event(req.body);
-        eventEdited._id = id;
-        const eventUpdated = await Event.findByIdAndUpdate(id, eventEdited);
+        const  id  = req.params.id;
+        const eventEdited = { ...req.body};
+
+        if (req.file) {
+            const cloudinaryURL = req.file.path ? req.file.path : null;
+            eventEdited.img = cloudinaryURL;
+        }
+        
+        const eventUpdated = await Event.findByIdAndUpdate(id, eventEdited, {new: true});
         if (eventUpdated) {
             return res.status(200).json(eventEdited);
         } else {
