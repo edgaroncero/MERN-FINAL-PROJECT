@@ -15,6 +15,7 @@ const register = async (req, res, next) => {
     newUser.email = req.body.email;
     const pwdHash = await bcrypt.hash(req.body.password, 10);
     newUser.password = pwdHash;
+    newUser.isAdmin = req.body.isAdmin;
   
     const userDb = await newUser.save();
     

@@ -3,12 +3,13 @@ const router = express.Router();
 //importamos las funciones del controlador y del middleware
 const { register, login, logout } = require("../authentication/jwt");
 const User = require("../models/User");
-/* const { isAuth } = require("../../middlewares/auth.middleware") */
 
 router.post("/register", register);
 router.post("/login", login);
 //le añadimos el middleware para que solo sea accesible si el user esta logueado
 router.post("/logout", logout)
+
+
 
 module.exports = router;
 
