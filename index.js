@@ -2,6 +2,7 @@ require ('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const cors = require('cors');
 
 // Auth
 require('jsonwebtoken');
@@ -13,7 +14,7 @@ const logError = require('./utils/log');
 //Routes
 const eventRoutes = require('./routes/event.routes');
 const userRoutes = require('./routes/user.routes');
-const router = require('./routes/event.routes');
+
 
 //Configuración del servidor
 connect();
@@ -29,10 +30,10 @@ const server = express();
     // Acceso público a las imágenes de PUBLIC
     //server.use(express.static(path.join(__dirname, 'public')));
     //CABECERAS DE AUTH
-    server.use((req, res, next) => {
-        res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-        res.header('Access-Control-Allow-Credentials', true);
-        res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    server.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         next();
       });
     server.set('secretKey', 'nodeRestApi');
