@@ -30,12 +30,12 @@ const server = express();
     // Acceso público a las imágenes de PUBLIC
     //server.use(express.static(path.join(__dirname, 'public')));
     //CABECERAS DE AUTH
-
+    server.use(cors());
     server.use(function(req, res, next) {
-        res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+        res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         next();
-      });
+    });
     server.set('secretKey', 'nodeRestApi');
 
     // Enrutado
