@@ -27,7 +27,7 @@ function  Register () {
                    </p>
                 </div>
                   <div className='logindiv'>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                     <div>
                        <label className='form-text'>
                        Nombre de Usuario

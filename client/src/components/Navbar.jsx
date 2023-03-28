@@ -1,8 +1,11 @@
 import { Arrow, dMoon, lMoon, Home, User} from '../config/icons-export'
 import { Link } from 'react-router-dom'
 import '../styles/component.styles.css'
+import { useContext } from 'react'
+import { LoginContext } from '../context/login-context'
 
 function Navbar () {
+ const {isLogin} = useContext(LoginContext)
   return (
       <header>
         <div className='header-a'>
@@ -29,11 +32,11 @@ function Navbar () {
          <Link to="/registrate">
            <button className='header-a_btn'><h4>Sign Up</h4></button>
          </Link>
-         <Link to="/profile">
+         { isLogin && (<Link to="/profile">
            <button className='header-a_btn'>
              <img src={User}/>
            </button>
-         </Link>
+         </Link>)}
            <button className='header-a_btn'>
              <img src={dMoon}/>
            </button>   

@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Events from './Events';
 import '../styles/Formulario.css';
 
 function Formulario() {
+  const [filters, setFilters] = useState({
+    name: '',
+    city: '',
+    category: 'All',
+    city: 'All',
+    startDate: '',
+    endDate: '',
+    price: '',
+    maxPrice: ''
+  })
   return (
+    <div>
     <form className="form-container">
       <div className="campo">
         <label htmlFor="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" />
       </div>
-
+      
       <div className="section doble">
         <div className="section">
           <label htmlFor="ciudad">Ciudad:</label>
@@ -18,17 +30,21 @@ function Formulario() {
             <option value="Barcelona">Barcelona</option>
             <option value="Bilbao">Bilbao</option>
             <option value="Valencia">Valencia</option>
+            <option value="Gijón">Gijón</option>
+            <option value="Arriondas">Arriondas</option>
           </select>
         </div>
 
         <div className="section">
           <label htmlFor="categoria">Categoría:</label>
           <select id="categoria" name="categoria">
-           <option value="Cualquiera">Cualquiera</option>
-            <option value="Tecnología">Tecnología</option>
-            <option value="Hogar">Hogar</option>
-            <option value="Ropa">Ropa</option>
-            <option value="Deporte">Deporte</option>
+          <option value="All">Cualquiera</option>
+           <option value="Entertainment">Sociocultural</option>
+            <option value="Tecnología">Entretenimiento</option>
+            <option value="Gatronomic">Gastronomía</option>
+            <option value="Sports and Adventures">Deporte y Aventura</option>
+            <option value="Beauty and Wellness">Belleza y Bienestar</option>
+            <option value="Educative">Educativo</option>
           </select>
         </div>
       </div>
@@ -52,6 +68,8 @@ function Formulario() {
 
       <button type="submit">Enviar</button>
     </form>
+    <Events filters={filters} />
+    </div>
   );
 }
 
