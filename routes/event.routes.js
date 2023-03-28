@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
     try {
     const { limit, offset } = req.query;
 
-    return Event.find()
+    return Event.find().sort( {dtstart: 1})
     .then(events => {
         if ( offset && limit ){
         return res.status(200).json(events.slice(offset, parseInt(limit) + parseInt(offset)));
@@ -37,7 +37,7 @@ router.get('/date', async (req, res, next) => {
     const { dtstart} = req.query;
 
     try { 
-        const eventbyDate = await Event.find({$and: [{dtstart : { $lte: dtstart}} , {dtend: {$gte: dtstart}} ]} );
+        const eventbyDate = await Event.find({$and: [{dtstart : { $lte: dtstart}} , {dtend: {$gte: dtstart}} ]} ).sort( {dtstart: 1});
         if ( eventbyDate.length ){
         return res.status(200).json(eventbyDate);
         } else {
@@ -55,7 +55,7 @@ router.get('/dates', async (req, res, next) => {
     try {
         let events = [];
         if ( dtstart && dtend ) {
-            events = await Event.find( {dtstart : { $gte: dtstart}, dtend: {$lte: dtend}  });
+            events = await Event.find( {dtstart : { $gte: dtstart}, dtend: {$lte: dtend}  }).sort( {dtstart: 1});
         }else {
             events = await Event.find();
         }
@@ -88,7 +88,7 @@ router.get('/city/:city', async (req, res, next) => {
     const { city } = req.params;
 
     try { 
-        const eventbyCity = await Event.find( {city: city});
+        const eventbyCity = await Event.find( {city: city}).sort( {dtstart: 1});
         if (eventbyCity ){
         return res.status(200).json(eventbyCity);
         } else {
@@ -99,6 +99,40 @@ router.get('/city/:city', async (req, res, next) => {
     }
 });
 
+    //Events by TITLE
+router.get('/title/:title', async (req, res, next) => {
+        const { title } = req.params;
+      
+        try {
+          const eventsByTitle = await Event.find({ title: { $regex: new RegExp(title, 'i') } }).sort( {dtstart: 1});
+      
+          if (eventsByTitle.length > 0) {
+            return res.status(200).json(eventsByTitle);
+          } else {
+            return res.status(404).json('No event found with this title');
+          }
+        } catch (error) {
+          return next(error);
+        }
+      });
+
+        //Events by CATEGORY
+router.get('/category/:category', async (req, res, next) => {
+        const { category } = req.params;
+      
+        try {
+          const eventsByCategory= await Event.find({ category: { $regex: new RegExp(category, 'i') } }).sort( {dtstart: 1});
+      
+          if (eventsByCategory.length > 0) {
+            return res.status(200).json(eventsByCategory);
+          } else {
+            return res.status(404).json('No event found with this title');
+          }
+        } catch (error) {
+          return next(error);
+        }
+      });
+    
 // union query params
 //router.get('/events/:idOrCity', async (req, res) => {
 //    const { idOrCity  } = req.params;
