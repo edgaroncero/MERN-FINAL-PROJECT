@@ -7,9 +7,13 @@ const jwt = require('jsonwebtoken');
 
 const register = async (req, res, next) => {
     try {
-        const newUser = new User();
+        
+        const newUser = new User();       
         const pwdHash = await bcrypt.hash(req.body.password, 10);
-        const cloudinaryURL = req.file.path ? req.file.path : null;
+        if (req.file) {
+            const cloudinaryURL = req.file.path ? req.file.path : null;
+            newUser.img = cloudinaryURL;
+        }        
         newUser.name = req.body.name;
         newUser.lastname = req.body.lastname;
         newUser.city = req.body.city;
@@ -17,7 +21,6 @@ const register = async (req, res, next) => {
         newUser.email = req.body.email;
         newUser.password = pwdHash;
         newUser.isAdmin = req.body.isAdmin;
-        newUser.img = cloudinaryURL;
         newUser.events = [];
 
         const userDb = await newUser.save();
@@ -35,7 +38,13 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
     try {
         const userInfo = await User.findOne({ email: req.body.email});
-        if( bcrypt.compareSync(req.body.password, userInfo.password)) {
+        if (!userInfo) {
+            return res.json({
+                status: 400,
+                message: 'No User found by this email',
+                data: null
+            })
+        } else if(userInfo.email && bcrypt.compareSync(req.body.password, userInfo.password)) {
             userInfo.password = null;
             const token = jwt.sign(
             {
@@ -52,7 +61,7 @@ const login = async (req, res, next) => {
                 data: { user: userInfo, token: token}
             });
         } else {
-            return res.json( { status: 400, message: 'Bad request', data: null});
+            return res.json( { status: 400, message: 'Password incorrect', data: null});
         }
     } catch (error) {
         return next(error);
@@ -108,8 +117,6 @@ const addEvent = async(req, res, next) => {
 const editUser = async (req, res, next) => {
     try {
       const userId = req.params.id;
-
-      
       const userEdited = await User.findById(userId);
   
       if (userEdited) {
