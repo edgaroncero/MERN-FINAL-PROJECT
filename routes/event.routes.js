@@ -198,8 +198,7 @@ router.get('/city/:city', async (req, res, next) => {
 router.post('/add', [fileMiddleware.parser.single('img')], async (req, res, next) => {
     
     try { 
-        const cloudinaryURL = req.file.path ? req.file.path : null;
-        const { title, category = 'Entertainment', location , city, province, lat, long, dtstart, dtend, price, info,  link, artist, users } = req.body;
+        const { title, category = 'Entertainment', location , city, province, lat, long, dtstart, dtend, price, info,  link, artist, img, users } = req.body;
     
         const event = {
             title, 
@@ -215,11 +214,15 @@ router.post('/add', [fileMiddleware.parser.single('img')], async (req, res, next
             info,  
             link, 
             artist, 
-            img: cloudinaryURL,
+            img,
             users: []
         };
 
             const newEvent = new Event(event);
+            if (req.file) {
+                const cloudinaryURL = req.file.path ? req.file.path : null;
+                newEvent.img = cloudinaryURL;
+            }
             const eventCreated = await newEvent.save();        
             return res.status(201).json(eventCreated);
     } catch (error) {
