@@ -9,7 +9,7 @@ const events = [
         
           {
             title: "Tour Atlético de Madrid",
-            category: "Entertainment",
+            category: "Entretenimiento",
             location: "Estadio Metropolitano",
             city: "Madrid",
             province: "Madrid",
@@ -53,7 +53,7 @@ const events = [
         },
         {
             title: "Mutua Madrid Open",
-            category: "Sports and Adventures",
+            category: "Deportes y Aventura",
             location: "Caja Mágica",
             city: "Madrid",
             province: "Madrid",
@@ -68,7 +68,7 @@ const events = [
         },
         {
             title: "Aquasella 2023",
-            category: "Entertainment",
+            category: "Entretenimiento",
             location: "Aquasella Beach",
             city: "Arriondas",
             province: "Asturias",
