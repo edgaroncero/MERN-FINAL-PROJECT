@@ -154,6 +154,24 @@ const editUser = async (req, res, next) => {
     }
   };
 
+const removeEvent = async (req, res, next) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.userId, {
+            $pull: { events: req.params.eventId }
+          }, { new: true });
+
+        if(!user){
+            return res.status(404).json({ mensaje: 'User not found' });
+        }
+        res.json({ mensaje: 'Event removed from user' });
+        } catch (error) {
+            next(error);
+        }
+};
+
+    
+
+
 const logout = (req, res, next) => {
     try {
         return res.json({
@@ -172,5 +190,6 @@ module.exports = {
     logout,
     isAuth,
     addEvent,
-    editUser
+    editUser,
+    removeEvent
 }

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { register, login, addEvent, editUser, logout, isAuth } = require('../auth/jwt');
+const { register, login, addEvent, editUser, logout, isAuth, removeEvent } = require('../auth/jwt');
 const fileMiddleware = require('../middlewares/file.middleware');
 const User = require('../models/User');
 
@@ -24,5 +24,7 @@ router.post('/login', login);
 router.post('/logout', logout);
 router.put('/', [isAuth], addEvent);
 router.put('/:id',[fileMiddleware.parser.single('img')] ,editUser);
+router.delete('/:userId/events/:eventId', removeEvent);
+
 
 module.exports = router;
