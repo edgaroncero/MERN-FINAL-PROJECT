@@ -20,7 +20,8 @@ const register = async (req, res, next) => {
         if (req.file) {
             const cloudinaryURL = req.file.path ? req.file.path : null;
             newUser.img = cloudinaryURL;
-        }        
+        }  
+        newUser.username = req.body.username;      
         newUser.name = req.body.name;
         newUser.lastname = req.body.lastname;
         newUser.city = req.body.city;
@@ -127,6 +128,7 @@ const editUser = async (req, res, next) => {
       const userEdited = await User.findById(userId);
   
       if (userEdited) {
+        if (req.body.username) userEdited.name = req.body.username;
         if (req.body.name) userEdited.name = req.body.name;
         if (req.body.lastname) userEdited.lastname = req.body.lastname;
         if (req.body.city) userEdited.city = req.body.city;
