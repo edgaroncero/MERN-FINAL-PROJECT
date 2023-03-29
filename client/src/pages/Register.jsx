@@ -6,11 +6,22 @@ function  Register () {
    const [username, setUsername] = useState('')
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
-   const [repeatPassword, setRepeatPassword] = useState('')
+   // const [repeatPassword, setRepeatPassword] = useState('')
    const [errors, setErrors] = useState('')
 
    const handleSubmit = (e) => {
       e.preventDefault()
+
+      fetch('https://eventasia-server.vercel.app/users/register', {
+         method: 'POST',
+         headers: {
+            'Content-Type':'application/json'
+         },
+         body: JSON.stringify({username, email, password})
+      }) 
+      .then((res => res.json()))
+      .then(data => console.log(data))
+      .catch(err => console.log(err))
    }
 
   return (
@@ -28,12 +39,12 @@ function  Register () {
                 </div>
                   <div className='logindiv'>
                     <form onSubmit={handleSubmit}>
-                    <div>
+                    {/* <div>
                        <label className='form-text'>
                        Nombre de Usuario
                        <input type="text" value={username} onChange={e => setUsername(e.target.value)}  />
                        </label>
-                    </div>
+                    </div> */}
 
                     <div>
                         <label className='form-text'>
@@ -49,12 +60,12 @@ function  Register () {
                        </label>
                     </div>
 
-                    <div>
+                    {/* <div>
                        <label className='form-text'>
                        Repetir contraseña
                        <input type="text" value={repeatPassword} onChange={e => setRepeatPassword(e.target.value)}  />
                        </label>
-                    </div>
+                    </div> */}
                        <button type='submit'>Crear cuenta</button>
                     </form>
                   </div>
