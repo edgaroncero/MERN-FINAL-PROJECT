@@ -2,13 +2,10 @@ require ('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const cors = require('cors');
 
-
-//authentication
-const session = require('express-session');
-const passport = require('passport');
-require('./authentication/passaport');
-
+// Auth
+require('jsonwebtoken');
 
 //Utils
 const {connect} = require('./utils/db');
@@ -16,11 +13,12 @@ const logError = require('./utils/log');
 
 //Routes
 const eventRoutes = require('./routes/event.routes');
-const userRouter = require('./routes/user.routes');
+const userRoutes = require('./routes/user.routes');
+
 
 //Configuración del servidor
 connect();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const server = express();
 
 // Middlewares
@@ -28,42 +26,40 @@ const server = express();
     // CONVERTIR A JSON LA REQ
     server.use(express.json());
     server.use(express.urlencoded({extended: true}));
-    // Acceso público a las imágenes de PUBLIC
-    //server.use(express.static(path.join(__dirname, 'public')));
+
+    //CABECERAS DE REQ
+    server.use(cors());
+    server.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
+    //No configurada la APIKEY de sesión
+    server.set('secretKey', 'nodeRestApi');
 
     // Enrutado
     server.use('/events', eventRoutes);
-    server.use('/users', userRouter);
-
-    server.use(
-     session({
-        secret: process.env.SESSION_SECRET || 'proyecto_node', // ¡Este secreto tendremos que cambiarlo en producción!
-        resave: false, // Solo guardará la sesión si hay cambios en ella.
-        saveUninitialized: false, // Lo usaremos como false debido a que gestionamos nuestra sesión con Passport
-        cookie: {
-            maxAge: 3600000 // Milisegundos de duración de nuestra cookie, en este caso será una hora.
-        },
-        })
-    );
-
-    server.use(passport.initialize());
-      server.use(passport.session()); 
-    
-    server.get('/', (req, res) => {
-        res.send('Trabajo final em grupo!');
+    server.use('/users', userRoutes);
+    server.use('/', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
     });
 
 
     // Control de errores
     server.use('*', (req, res, next) => {
         const msg = 'Route not found';
-        const error = new Error('Route not found)');
+        const error = new Error('Route not found');
         error.status = 404;
         next(error);
         const log = `${msg} ${req.path} ${new Date().toISOString()}\n`;
         logError(log);
         res.status(404).send(msg);
     });
+
+    server.use((error, req, res, next) => {
+        return res.status(error.status || 500).json(error.message || 'Unexpected error');
+      });
+      
 
 
 server.listen(PORT, () =>{
