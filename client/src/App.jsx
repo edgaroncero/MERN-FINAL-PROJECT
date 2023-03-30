@@ -1,9 +1,11 @@
 import ReactDOM from 'react-dom/client';
-import { Link, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import { useContext, useEffect, useState } from 'react'
-import { Login, Register, Profile, Home, Events, Footer, Navbar, News, Formulario} from './config/pages-export'
+import { Login, Register, Profile, Home, Events, Footer, Navbar, News, Formulario, Event} from './config/pages-export'
 import { LoginContext } from './context/login-context';
+
+
 
 
 function App() {
@@ -26,6 +28,7 @@ function App() {
     <main>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/event/:id" element={<Event />} />
           <Route path="/registrate" element={<Register />} />
           <Route path="/login" element={ <Login />} />
           <Route path="/profile" element={ <Profile />} />
