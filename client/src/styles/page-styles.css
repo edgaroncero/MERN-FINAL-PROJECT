@@ -27,14 +27,20 @@
         align-items: center;
         justify-content: center;
     }
+    .logindiv form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
    
     .logindiv input{
         font-family: 'Overpass', sans-serif;
         font-size: 100%;
         color: #1b262c;
         display: block;
-        width: 550px;
-        height: 30px;
+        width: 600px;
+        height: 40px;
         margin-bottom: 10px;
         padding: 5px 5px 5px 10px;
     }
@@ -50,7 +56,34 @@
         -webkit-border-radius: 3px 3px 3px 3px; 
         background-color: #000000;   
         margin-top: 10px;
+        cursor: pointer;
     } 
+
+    .username-section {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+    }
+
+    .username-section input {
+        padding: 5px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding-left: 4px;
+        
+    }
+
+    .form-text_username {
+        width: 49%;
+    }
+
+
+    .logindiv span {
+        color: red;
+        /* margin: 20px; */
+    }
 
     .logindiv button:hover{
         background-color: black;
@@ -80,6 +113,10 @@
     }
     .profile-container img {
         height: 150px;
+    }
+
+    .profile-container button {
+        cursor: pointer;
     }
     .home-container{
         display: flex;
@@ -142,6 +179,33 @@
         background-color: #000000;   
         margin-top: 10px;
     } 
+
+    .username-section {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+    }
+
+    .username-section input {
+        padding: 5px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding-left: 4px;
+        
+    }
+
+    .form-text_username {
+        width: 49%;
+    }
+
+
+    .logindiv span {
+        color: red;
+        /* margin: 20px; */
+    }
+
 
     .logindiv button:hover{
         background-color: black;
@@ -233,6 +297,33 @@
         background-color: #000000;   
         margin-top: 10px;
     } 
+
+    .username-section {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+    }
+
+    .username-section input {
+        padding: 5px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding-left: 4px;
+        
+    }
+
+    .form-text_username {
+        width: 49%;
+    }
+
+
+    .logindiv span {
+        color: red;
+        /* margin: 20px; */
+    }
+
 
     .logindiv label {
         color: #000000;
