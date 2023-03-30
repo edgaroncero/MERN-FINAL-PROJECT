@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors');
 
+// Ruta HTML
+
+
 // Auth
 require('jsonwebtoken');
 
@@ -24,29 +27,31 @@ const server = express();
 // Middlewares
 
     // CONVERTIR A JSON LA REQ
-
     server.use(express.json());
     server.use(express.urlencoded({extended: true}));
-    // Acceso público a las imágenes de PUBLIC
-    //server.use(express.static(path.join(__dirname, 'public')));
-    //CABECERAS DE AUTH
+
+    //CABECERAS DE REQ
     server.use(cors());
     server.use(function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         next();
     });
+    //No configurada la APIKEY de sesión
     server.set('secretKey', 'nodeRestApi');
 
     // Enrutado
     server.use('/events', eventRoutes);
     server.use('/users', userRoutes);
+    server.use('/', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    });
 
 
     // Control de errores
     server.use('*', (req, res, next) => {
         const msg = 'Route not found';
-        const error = new Error('Route not found)');
+        const error = new Error('Route not found');
         error.status = 404;
         next(error);
         const log = `${msg} ${req.path} ${new Date().toISOString()}\n`;

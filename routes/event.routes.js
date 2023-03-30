@@ -2,15 +2,14 @@ const express = require('express');
 const Event = require('../models/Event');
 
 const fileMiddleware = require('../middlewares/file.middleware');
-const imageToUri = require('image-to-uri');
 const fs = require('fs');
 
 const router = express.Router();
 
-
-// GET QUERYS
+// GET: QUERYS
 
     //Events List
+
 router.get('/', async (req, res, next) => {
 
     try {
@@ -33,6 +32,7 @@ router.get('/', async (req, res, next) => {
 });
 
     //Events by date
+
 router.get('/date', async (req, res, next) => {
     const { dtstart} = req.query;
 
@@ -48,7 +48,8 @@ router.get('/date', async (req, res, next) => {
     }
 });
 
-    //Events from DT
+    //Events between dates
+
 router.get('/dates', async (req, res, next) => {
     const { dtstart, dtend } = req.query;
 
@@ -66,9 +67,10 @@ router.get('/dates', async (req, res, next) => {
     }
 });
 
-// GET PARAMS
+// GET: PARAMS
 
     //Events by ID
+
 router.get('/:id', async (req, res, next) => {
     const id = req.params.id;
     try { 
@@ -84,6 +86,7 @@ router.get('/:id', async (req, res, next) => {
 });
 
     //Events by CITY
+
 router.get('/city/:city', async (req, res, next) => {
     const { city } = req.params;
 
@@ -100,6 +103,7 @@ router.get('/city/:city', async (req, res, next) => {
 });
 
     //Events by TITLE
+
 router.get('/title/:title', async (req, res, next) => {
         const { title } = req.params;
       
@@ -117,6 +121,7 @@ router.get('/title/:title', async (req, res, next) => {
       });
 
         //Events by CATEGORY
+
 router.get('/category/:category', async (req, res, next) => {
         const { category } = req.params;
       
@@ -132,102 +137,8 @@ router.get('/category/:category', async (req, res, next) => {
           return next(error);
         }
       });
-    
-// union query params
-//router.get('/events/:idOrCity', async (req, res) => {
-//    const { idOrCity  } = req.params;
-//
-//    try { 
-//        let event = null;
-//        try {
-//            const eventId = mongoose.Types.ObjectId(idOrCity);
-//            event = await Event.findById(eventId);
-//        } catch (err) {
-//            if (err.name === 'BSONTypeError') {
-//                event = await Event.findOne( {city: idOrCity} );
-//            } else {
-//                return res.status(500).json(err);
-//            }
-//        }
-//
-//        if (event) {
-//            return res.status(200).json(event);
-//        } else {
-//            return res.status(404).json('No Event found by this Id');
-//        }
-//    } catch (err) {
-//        return res.status(500).json(err);
-//    }
-//});  
 
-// POST
-
-// IMÁGENES - MULTER
-//router.post('/', [fileMiddleware.upload.single('img')], async (req, res, next) => {
-//    
-//    try { 
-//    const { title, category = 'Entertainment', location , city, province, lat, long, dtstart, dtend, price, info,  link, artist, users } = req.body;
-//    const imgEvent = req.file ? req.file.filename : null;
-//    const event = {
-//        title, 
-//        category, 
-//        location , 
-//        city, 
-//        province, 
-//        lat, 
-//        long, 
-//        dtstart, 
-//        dtend, 
-//        price, 
-//        info,  
-//        link, 
-//        artist, 
-//        img: imgEvent,
-//        users: []
-//    };
-//    
-//        const newEvent = new Event(event);
-//        const eventCreated = await newEvent.save();        
-//        return res.status(201).json(eventCreated);
-//    } catch (error) {
-//        return next(error);
-//    }
-//});
-//
-////IMÁGENES - IMAGE TO URI
-//router.post('/create', [fileMiddleware.upload.single('img')], async (req, res, next) => {
-//    
-//    try { 
-//        const imgEvent = req.file.path ? req.file.path : null;
-//        const { title, category = 'Entertainment', location , city, province, lat, long, dtstart, dtend, price, info,  link, artist, users } = req.body;
-//        const event = {
-//            title, 
-//            category, 
-//            location , 
-//            city, 
-//            province, 
-//            lat, 
-//            long, 
-//            dtstart, 
-//            dtend, 
-//            price, 
-//            info,  
-//            link, 
-//            artist, 
-//            img: imageToUri(imgEvent),
-//            users: []
-//        };
-//
-//            const newEvent = new Event(event);
-//            const eventCreated = await newEvent.save(); 
-//            await fs.unlinkSync(imgEvent);      
-//            return res.status(201).json(eventCreated);
-//    } catch (error) {
-//       return next(error);
-//    }
-//});
-
-//IMÁGENES - CLOUDINARY
+//POST: IMÁGENES - CLOUDINARY STORAGE
 
 router.post('/add', [fileMiddleware.parser.single('img')], async (req, res, next) => {
     
@@ -251,7 +162,6 @@ router.post('/add', [fileMiddleware.parser.single('img')], async (req, res, next
             img,
             users: []
         };
-
             const newEvent = new Event(event);
             if (req.file) {
                 const cloudinaryURL = req.file.path ? req.file.path : null;
@@ -300,7 +210,7 @@ router.put('/:id', [fileMiddleware.parser.single('img')], async (req, res, next)
     }
 })
 
-// ADD USER 
+// ADD USER - no necesaria en el proyecto
 
 router.put('/users/add-user', async (req, res, next) => {
     try {
