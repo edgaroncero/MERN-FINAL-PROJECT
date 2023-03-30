@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 
 function  Register () {
+   const [name, setName] = useState('')
+   const [lastname, setLastname] = useState('')
    const [username, setUsername] = useState('')
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
+   
    // const [repeatPassword, setRepeatPassword] = useState('')
    const [errors, setErrors] = useState('')
 
@@ -17,7 +20,7 @@ function  Register () {
          headers: {
             'Content-Type':'application/json'
          },
-         body: JSON.stringify({username, email, password})
+         body: JSON.stringify({name, lastname, username, email, password})
       }) 
       .then((res => res.json()))
       .then(data => console.log(data))
@@ -39,13 +42,27 @@ function  Register () {
                 </div>
                   <div className='logindiv'>
                     <form onSubmit={handleSubmit}>
-                    {/* <div>
-                       <label className='form-text'>
-                       Nombre de Usuario
-                       <input type="text" value={username} onChange={e => setUsername(e.target.value)}  />
-                       </label>
-                    </div> */}
-
+                    <div className='username-section'>
+                        <div className='form-text_username'>
+                           <label className='form-text'>
+                           Nombre
+                           <input type="text" value={name} onChange={e => setName(e.target.value)}  />
+                           </label>
+                        </div>
+    
+                        <div className='form-text_username'>
+                           <label className='form-text'>
+                           Primer Apellido
+                           <input type="text" value={lastname} onChange={e => setLastname(e.target.value)}  />
+                           </label>
+                        </div>
+                    </div>
+                     <div>
+                           <label className='form-text'>
+                           Nombre de Usuario
+                           <input type="text" value={username} onChange={e => setUsername(e.target.value)}  />
+                           </label>
+                        </div>
                     <div>
                         <label className='form-text'>
                          Email

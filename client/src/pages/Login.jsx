@@ -48,14 +48,16 @@ function Login () {
                 <div className='logindiv'>
                 <form onSubmit={handleSubmit}>
                    <div>
-                     <label>Correo Electrónico</label>
+                     <label>Correo Electrónico
                      <input value={email || ''} type="text" onChange={(e) => setEmail(e.target.value)} />
                      {emailErrors && <span className='error'>{emailErrors}</span> }
+                     </label>
                    </div>
                    <div>
-                     <label>Contraseña</label>
+                     <label>Contraseña
                      <input value={password || ''} type="text" onChange={(e) => setPassword(e.target.value)} />
                      {passwordErrors && <span className='error'>{passwordErrors}</span> }
+                     </label>
                    </div>
                     <button>Iniciar sesión</button>
                 </form>
