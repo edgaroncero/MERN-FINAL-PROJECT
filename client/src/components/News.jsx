@@ -1,4 +1,11 @@
 import React, { useState } from 'react';
+/* import { FormattedMessage } from 'react-intl';
+
+
+<FormattedMessage
+id="app.about"
+defaultMessage="traducion"
+/> */
 
 function News() {
   const [matérias, setMatérias] = useState([
