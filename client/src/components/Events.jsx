@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { CartContext } from '../context/cart-context';
 import '../styles/Events.css';
 
 import { Link } from 'react-router-dom';
 
-const Events = () => {
-  const [events, setEvents] = useState([])
+function Events ({ events }) {
+  const { cart, setCart } = useContext(CartContext)
 
-  useEffect(() => {
-    fetch('https://server-chi-ten.vercel.app/events')
-      .then(res => res.json())
-      .then(data => setEvents(data))
-  }, [])
+  const addToCart = (event) => {
+     const eventExist = cart.find((item) => item._id === event._id)
+
+     if (!eventExist) {
+      setCart((prevState) =>  ([ ...prevState, event ]))
+    }
+  }
 
   return (
     <div className="map-events-container">
@@ -21,10 +25,10 @@ const Events = () => {
             <div className='event-category'>{event.category}</div>
             <div className='event-location'>{event.location} - {event.city}</div>
             <div className='event-date'>{`${event.dtstart} - ${event.dtend}`}</div>
-            <div className='event-price'>{`${event.price}€`}</div>
+            <div className='event-price'>{ event.price == 0 ? 'GRATIS' :`${event.price}€`}</div>
             <div className="event-buttons">
-              <button className="subscribe-button">Suscribete</button>
-              <Link to={`/event/${event._id}`}><button className="info-button">Info</button></Link>
+              <button className="subscribe-button" onClick={() => addToCart(event)} >Suscríbete</button>
+               <Link to={`/event/${event._id}`}><button className="info-button">Info</button></Link>
             </div>
           </div>
         ))}
@@ -33,5 +37,5 @@ const Events = () => {
   );
 };
 
-
 export default Events;
+
