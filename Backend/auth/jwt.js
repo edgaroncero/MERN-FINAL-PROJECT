@@ -10,6 +10,7 @@ const register = async (req, res, next) => {
         const newUser = new User();
         const pwdHash = await bcrypt.hash(req.body.password, 10);
         const cloudinaryURL = req.file.path ? req.file.path : null;
+        newUser.username = req.body.username;
         newUser.name = req.body.name;
         newUser.lastname = req.body.lastname;
         newUser.city = req.body.city;
@@ -107,12 +108,13 @@ const addEvent = async(req, res, next) => {
 
 const editUser = async (req, res, next) => {
     try {
-      const userId = req.params.id;
+    const userId = req.params.id;
 
-      const cloudinaryURL = req.file.path ? req.file.path : null;
-      const userEdited = await User.findById(userId);
-  
-      if (userEdited) {
+    const cloudinaryURL = req.file.path ? req.file.path : null;
+    const userEdited = await User.findById(userId);
+
+    if (userEdited) {
+        if (req.body.username) userEdited.username = req.body.username;
         if (req.body.name) userEdited.name = req.body.name;
         if (req.body.lastname) userEdited.lastname = req.body.lastname;
         if (req.body.city) userEdited.city = req.body.city;
@@ -120,7 +122,7 @@ const editUser = async (req, res, next) => {
         if (req.body.password) userEdited.password = req.body.password;
         if (req.file && req.file.path) userEdited.img = req.file.path;
         if (req.body.events) userEdited.events = [];
-  
+
         const userModified = await userEdited.save();
   
         return res.json({
