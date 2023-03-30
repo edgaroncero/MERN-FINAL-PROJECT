@@ -7,14 +7,22 @@ const jwt = require('jsonwebtoken');
 
 const register = async (req, res, next) => {
     try {
-        const userInfo = await User.findOne({ email: req.body.email});
-        if (userInfo) {
+        const email = await User.findOne({ email: req.body.email});
+        const username = await User.findOne({ username: req.body.username});
+
+        if (email) {
             return res.json({
                 status: 400,
                 message: 'This email already exist',
                 data: null
             })
-        };
+        } else if (username) {
+            return res.json({
+                status: 400,
+                message: 'This username already exist',
+                data: null
+            })
+        }
         const newUser = new User();       
         const pwdHash = await bcrypt.hash(req.body.password, 10);
         if (req.file) {
