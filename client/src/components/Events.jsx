@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/Events.css';
 
-
+import { Link } from 'react-router-dom';
 
 const Events = () => {
   const [events, setEvents] = useState([])
@@ -24,7 +24,7 @@ const Events = () => {
             <div className='event-price'>{`${event.price}€`}</div>
             <div className="event-buttons">
               <button className="subscribe-button">Suscribete</button>
-              <button className="info-button">Info</button>
+              <Link to={`/event/${event._id}`}><button className="info-button">Info</button></Link>
             </div>
           </div>
         ))}
