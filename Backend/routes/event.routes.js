@@ -69,7 +69,7 @@ router.get('/dates', async (req, res, next) => {
 // GET PARAMS
 
     //Events by ID
-/* router.get('/:id', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     const id = req.params.id;
     try { 
         const event = await Event.findById(id);
@@ -81,8 +81,7 @@ router.get('/dates', async (req, res, next) => {
     } catch (err) {
         return next(error);
     }
-}); */
-
+});
     //Events by CITY
 router.get('/city/:city', async (req, res, next) => {
     const { city } = req.params;
