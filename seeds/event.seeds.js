@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-
 const Event = require('../models/Event');
-
 const { DB_URL } = require('../utils/db');
 
 const events = [

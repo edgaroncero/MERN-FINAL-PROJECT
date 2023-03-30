@@ -76,6 +76,7 @@ const login = async (req, res, next) => {
     }
 };
 
+// Securizado de la ruta: /addevent
 const isAuth = (req, res, next) => {
     const authorization = req.headers.authorization;
     if(!authorization) {
@@ -122,6 +123,7 @@ const addEvent = async(req, res, next) => {
     } 
 };
 
+// Añadir eventos (sólo isAdmin)
 const editUser = async (req, res, next) => {
     try {
       const userId = req.params.id;
@@ -170,8 +172,6 @@ const removeEvent = async (req, res, next) => {
             next(error);
         }
 };
-
-    
 
 
 const logout = (req, res, next) => {

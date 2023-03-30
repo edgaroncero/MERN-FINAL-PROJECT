@@ -1,10 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
+// Funciones de archivo JWT
 const { register, login, addEvent, editUser, logout, isAuth, removeEvent } = require('../auth/jwt');
+// Subida de imágenes
 const fileMiddleware = require('../middlewares/file.middleware');
+
+// Modelo User
 const User = require('../models/User');
 
+// Listado de usuarios con y sin populate
 router.get('/', async (req, res, next) => {
     const { viewAll } = req.query;
     try {
