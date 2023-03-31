@@ -1,6 +1,5 @@
 import '../styles/page-styles.css'
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
 
 function  Register () {
    const [name, setName] = useState('')
