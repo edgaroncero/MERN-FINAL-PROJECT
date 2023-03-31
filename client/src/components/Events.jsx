@@ -1,18 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { useContext } from 'react';
-import { CartContext } from '../context/cart-context';
 import '../styles/Events.css';
 import { Link } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+// import { jwt } from 'jsonwebtoken';
 
 
 function Events ({ events }) {
-  const { cart, setCart } = useContext(CartContext)
+  
 
   const addToCart = (event) => {
-  const eventExist = cart.find((item) => item._id === event._id)
-     if (!eventExist) {
-      setCart((prevState) =>  ([ ...prevState, event ]))
-    }
+
+      const token = localStorage.getItem('token')
+
+      const decodeToken = jwt_decode(token)
+      const userId = decodeToken.id
+      
+
+      fetch('https://eventasia-server.vercel.app/users', {
+        method: 'PUT',
+        headers: { 
+          'Content-Type': 'application/json' , 
+          'Authorization': `Bearer ${token}`
+      },
+        body: JSON.stringify({ userId, eventId: event._id })
+      })
+      .then(res => res.json())
+      .then(data => console.log(data))
+      .catch(error => console.log(error));
+       
   }
 
   return (
