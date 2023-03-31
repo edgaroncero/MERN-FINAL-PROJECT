@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 // Funciones de archivo JWT
-const { register, login, addEvent, editUser, logout, isAuth, removeEvent } = require('../auth/jwt');
+const { register, login, addEvent, editUser, logout, isAuth, removeEvent, validarPassword } = require('../auth/jwt');
 // Subida de imágenes
 const fileMiddleware = require('../middlewares/file.middleware');
+
 
 // Modelo User
 const User = require('../models/User');
