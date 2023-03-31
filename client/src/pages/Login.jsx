@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from 'react'
 import { LoginContext } from '../context/login-context'
 import { useNavigate } from 'react-router-dom'
 import { useValidate } from '../hooks/form-validation'
+import jwt_decode from 'jwt-decode';
 
 function Login () {
   const [email, setEmail] = useState('')
@@ -31,6 +32,8 @@ function Login () {
            setIsLogin(true)
            setUserLogged(`${name} ${lastname}`)
            navigate('/profile')
+
+           const getToken = localStorage.getItem('token')
         }
         console.log(data)
       })
