@@ -10,6 +10,7 @@ Route not found /eventos 2023-03-24T14:04:47.525Z
 Route not found /evemts/eventos 2023-03-24T14:05:03.830Z
 Route not found /events 2023-03-24T16:50:30.998Z
 Route not found /events/:id 2023-03-24T16:50:37.065Z
+<<<<<<< HEAD
 Route not found / 2023-03-26T13:56:16.982Z
 Route not found /uvents 2023-03-26T13:56:36.721Z
 Route not found / 2023-03-26T19:19:04.118Z
@@ -38,3 +39,8 @@ Route not found /events/id:/64202cd89910d20de922eb1a 2023-03-27T21:41:35.086Z
 Route not found /events/id:64202cd89910d20de922eb1a 2023-03-27T21:41:39.380Z
 Route not found / 2023-03-30T09:13:56.088Z
 Route not found /favicon.ico 2023-03-30T09:13:56.840Z
+=======
+Route not found /favicon.ico 2023-03-25T12:45:50.083Z
+>>>>>>> edgar-roncero
+Route not found / 2023-03-31T07:19:58.178Z
+Route not found /favicon.ico 2023-03-31T07:19:58.904Z

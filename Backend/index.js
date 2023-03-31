@@ -6,6 +6,12 @@ const path = require('path');
 // Auth
 require('jsonwebtoken');
 
+//authentication
+const session = require('express-session');
+const passport = require('passport');
+require('./authentication/passaport');
+
+
 //Utils
 const {connect} = require('./utils/db');
 const logError = require('./utils/log');
