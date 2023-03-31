@@ -1,0 +1,1 @@
+// Errores en las peticiones

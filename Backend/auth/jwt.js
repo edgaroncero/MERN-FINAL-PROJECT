@@ -7,10 +7,28 @@ const jwt = require('jsonwebtoken');
 
 const register = async (req, res, next) => {
     try {
-        const newUser = new User();
+        const email = await User.findOne({ email: req.body.email});
+        const username = await User.findOne({ username: req.body.username});
+        if (email) {
+            return res.json({
+                status: 400,
+                message: 'This email already exist',
+                data: null
+            })
+        } else if (username) {
+            return res.json({
+                status: 400,
+                message: 'This username already exist',
+                data: null
+            })
+        }
+        const newUser = new User();       
         const pwdHash = await bcrypt.hash(req.body.password, 10);
-        const cloudinaryURL = req.file.path ? req.file.path : null;
-        newUser.username = req.body.username;
+        if (req.file) {
+            const cloudinaryURL = req.file.path ? req.file.path : null;
+            newUser.img = cloudinaryURL;
+        }  
+        newUser.username = req.body.username;      
         newUser.name = req.body.name;
         newUser.lastname = req.body.lastname;
         newUser.city = req.body.city;
@@ -18,7 +36,6 @@ const register = async (req, res, next) => {
         newUser.email = req.body.email;
         newUser.password = pwdHash;
         newUser.isAdmin = req.body.isAdmin;
-        newUser.img = cloudinaryURL;
         newUser.events = [];
 
         const userDb = await newUser.save();
@@ -36,7 +53,13 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
     try {
         const userInfo = await User.findOne({ email: req.body.email});
-        if( bcrypt.compareSync(req.body.password, userInfo.password)) {
+        if (!userInfo) {
+            return res.json({
+                status: 400,
+                message: 'No User found by this email',
+                data: null
+            })
+        } else if(userInfo.email && bcrypt.compareSync(req.body.password, userInfo.password)) {
             userInfo.password = null;
             const token = jwt.sign(
             {
@@ -53,13 +76,14 @@ const login = async (req, res, next) => {
                 data: { user: userInfo, token: token}
             });
         } else {
-            return res.json( { status: 400, message: 'Bad request', data: null});
+            return res.json( { status: 400, message: 'Password incorrect', data: null});
         }
     } catch (error) {
         return next(error);
     }
 };
 
+// Securizado de la ruta: /addevent
 const isAuth = (req, res, next) => {
     const authorization = req.headers.authorization;
     if(!authorization) {
@@ -106,15 +130,14 @@ const addEvent = async(req, res, next) => {
     } 
 };
 
+// Añadir eventos (sólo isAdmin)
 const editUser = async (req, res, next) => {
     try {
-    const userId = req.params.id;
-
-    const cloudinaryURL = req.file.path ? req.file.path : null;
-    const userEdited = await User.findById(userId);
-
-    if (userEdited) {
-        if (req.body.username) userEdited.username = req.body.username;
+      const userId = req.params.id;
+      const userEdited = await User.findById(userId);
+  
+      if (userEdited) {
+        if (req.body.username) userEdited.name = req.body.username;
         if (req.body.name) userEdited.name = req.body.name;
         if (req.body.lastname) userEdited.lastname = req.body.lastname;
         if (req.body.city) userEdited.city = req.body.city;
@@ -122,7 +145,7 @@ const editUser = async (req, res, next) => {
         if (req.body.password) userEdited.password = req.body.password;
         if (req.file && req.file.path) userEdited.img = req.file.path;
         if (req.body.events) userEdited.events = [];
-
+  
         const userModified = await userEdited.save();
   
         return res.json({
@@ -142,6 +165,22 @@ const editUser = async (req, res, next) => {
     }
   };
 
+const removeEvent = async (req, res, next) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.userId, {
+            $pull: { events: req.params.eventId }
+          }, { new: true });
+
+        if(!user){
+            return res.status(404).json({ mensaje: 'User not found' });
+        }
+        res.json({ mensaje: 'Event removed from user' });
+        } catch (error) {
+            next(error);
+        }
+};
+
+
 const logout = (req, res, next) => {
     try {
         return res.json({
@@ -160,5 +199,6 @@ module.exports = {
     logout,
     isAuth,
     addEvent,
-    editUser
+    editUser,
+    removeEvent
 }

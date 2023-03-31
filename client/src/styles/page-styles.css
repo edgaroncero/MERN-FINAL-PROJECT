@@ -63,6 +63,27 @@
         cursor: pointer;
     } 
 
+    .username-section {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+    }
+
+    .username-section input {
+        padding: 5px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding-left: 4px;
+        
+    }
+
+    .form-text_username {
+        width: 49%;
+    }
+
+
     .logindiv span {
         color: red;
         /* margin: 20px; */
@@ -198,6 +219,33 @@
         margin-top: 10px;
     } 
 
+    .username-section {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+    }
+
+    .username-section input {
+        padding: 5px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding-left: 4px;
+        
+    }
+
+    .form-text_username {
+        width: 49%;
+    }
+
+
+    .logindiv span {
+        color: red;
+        /* margin: 20px; */
+    }
+
+
     .logindiv button:hover{
         background-color: black;
         
@@ -288,6 +336,33 @@
         background-color: #000000;   
         margin-top: 10px;
     } 
+
+    .username-section {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+    }
+
+    .username-section input {
+        padding: 5px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding-left: 4px;
+        
+    }
+
+    .form-text_username {
+        width: 49%;
+    }
+
+
+    .logindiv span {
+        color: red;
+        /* margin: 20px; */
+    }
+
 
     .logindiv label {
         color: #000000;

@@ -6,7 +6,7 @@ const eventSchema = new Schema(
     {
         id: { type: String },
         title: { type: String, required: true },
-        category: {type: String, enum: ['Socio Cultural', 'Entretenimiento', 'Gastronomia', 'Deportes y Aventuras', 'Actividades Infantiles', 'Belleza y Bienestar', 'Educativos']},
+        category: {type: String, enum: ['Socio Cultural', 'Entretenimiento', 'Gastronomía', 'Deportes y Aventura', 'Actividades Infantiles', 'Belleza y Salud', 'Educación']},
         location: {type: String },
         city: {type: String },
         province: {type: String},

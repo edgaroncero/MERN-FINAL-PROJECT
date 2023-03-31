@@ -2,15 +2,10 @@ require ('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const cors = require('cors');
 
 // Auth
 require('jsonwebtoken');
-
-//authentication
-const session = require('express-session');
-const passport = require('passport');
-require('./authentication/passaport');
-
 
 //Utils
 const {connect} = require('./utils/db');
@@ -19,7 +14,6 @@ const logError = require('./utils/log');
 //Routes
 const eventRoutes = require('./routes/event.routes');
 const userRoutes = require('./routes/user.routes');
-const router = require('./routes/event.routes');
 
 //Configuración del servidor
 connect();
@@ -32,26 +26,29 @@ const server = express();
 
     server.use(express.json());
     server.use(express.urlencoded({extended: true}));
-    // Acceso público a las imágenes de PUBLIC
-    //server.use(express.static(path.join(__dirname, 'public')));
-    //CABECERAS DE AUTH
-    server.use((req, res, next) => {
-        res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-        res.header('Access-Control-Allow-Credentials', true);
-        res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    //CABECERAS DE REQ
+    server.use(cors());
+    server.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         next();
-      });
+    });
+    //No configurada la APIKEY de sesión
     server.set('secretKey', 'nodeRestApi');
 
     // Enrutado
     server.use('/events', eventRoutes);
     server.use('/users', userRoutes);
+    server.use('/', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    });
 
 
     // Control de errores
     server.use('*', (req, res, next) => {
         const msg = 'Route not found';
-        const error = new Error('Route not found)');
+        const error = new Error('Route not found');
         error.status = 404;
         next(error);
         const log = `${msg} ${req.path} ${new Date().toISOString()}\n`;

@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-
 const User = require('../models/User');
-
 const { DB_URL } = require('../utils/db');
 
 const users = [

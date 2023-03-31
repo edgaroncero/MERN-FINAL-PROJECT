@@ -11,11 +11,19 @@ function Login () {
                  <p>Te damos la bienvenida!</p>
                 </div>
                 <div className='logindiv'>
-                <form>
-                     <label>Nombre de Usuario</label>
-                     <input type="text"   />
-                     <label>Contraseña</label>
-                     <input type="text"   />
+                <form onSubmit={handleSubmit}>
+                   <div>
+                     <label>Correo Electrónico
+                     <input value={email || ''} type="text" onChange={(e) => setEmail(e.target.value)} />
+                     {emailErrors && <span className='error'>{emailErrors}</span> }
+                     </label>
+                   </div>
+                   <div>
+                     <label>Contraseña
+                     <input value={password || ''} type="text" onChange={(e) => setPassword(e.target.value)} />
+                     {passwordErrors && <span className='error'>{passwordErrors}</span> }
+                     </label>
+                   </div>
                     <button>Iniciar sesión</button>
                 </form>     
                 <p>¿No tienes una cuenta?
