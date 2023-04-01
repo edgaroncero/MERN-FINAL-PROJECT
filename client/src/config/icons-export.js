@@ -10,6 +10,5 @@ import Facebook from '../icons/facebook.svg'
 import Twitter from '../icons/twitter.svg'
 import Instagram from '../icons/instagram.svg'
 
-
-
 export { Arrow, dMoon, lMoon, Home, imgProfile, User, Logo, Logotype, Facebook, Twitter, Instagram }
+

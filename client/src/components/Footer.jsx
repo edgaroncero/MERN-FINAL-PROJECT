@@ -1,14 +1,14 @@
 import '../../src/index.css';
 import { Facebook, Instagram, Twitter} from '../config/icons-export'
-
-
 import React from 'react';
+
 
 function Footer () {
   return (
     <div className="footer">
     <p>Contáctenos en: eventasia@gmail.com</p>
     <div className="social-media-links">
+
       <a href="https://www.facebook.com">
         <img src={Facebook} alt="Facebook" />
       </a>

@@ -122,7 +122,7 @@ function Formulario() {
           <select onChange={handleCategory} id="categoria" name="categoria">
           <option value="All">Cualquiera</option>
            <option value="Socio Cultural">Socio Cultural</option>
-           <option value="Belleza y Salud">Arte y Belleza</option>
+           <option value="Belleza y Salud">Belleza y Salud</option>
             <option value="Gastronomía">Gastronomía</option>
             <option value="Actividades Infantiles">Actividades Infantiles</option>
             <option value="Entretenimiento">Entretenimiento</option>
