@@ -14,4 +14,3 @@ import CityMenu from "../components/CityMenu";
 import CategoryMenu from "../components/CategoryMenu";
 
 export { Login, Register, Profile, Home, Events, Footer, Navbar, News, Formulario, Cart, Event, CityMenu, CategoryMenu }
-
