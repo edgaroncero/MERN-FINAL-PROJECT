@@ -1,16 +1,9 @@
 import React, { useEffect, useState} from 'react';
+
 import { useParams } from "react-router-dom";
 import Map from '../components/Map';
 
 import '../styles/event-style.css';
-
-
-const location = {
-  address: '1600 Amphitheatre Parkway, Mountain View, california.',
-  lat: 37.42216,
-  lng: -122.08427,
-};
-
 
 function Event (props) {
 
@@ -20,7 +13,6 @@ function Event (props) {
     let [isLoading, setIsLoading] = useState(false);
     
     // BOTONES INFO
-
       const [showDivPrice, setShowDivPrice] = useState(false);
       const [showDivLink, setShowDivLink] = useState(false);
       const [showDivDates, setShowDivDates] = useState(false);
@@ -36,8 +28,6 @@ function Event (props) {
       const toggleDivDates = () => {
         setShowDivDates(!showDivDates);
       };
-
-    const center = {};
 
     useEffect(() => {
         setIsLoading(true);
@@ -104,3 +94,4 @@ function Event (props) {
 };
 
 export default Event;
+

@@ -3,6 +3,7 @@ import { imgProfile } from "../config/icons-export"
 import { LoginContext } from "../context/login-context"
 import { Navigate, useNavigate } from "react-router-dom"
 import Cart from "../components/Cart"
+import '../styles/Profile.css'
 
 function Profile () {
   const { isLogin, setIsLogin, userLogged } = useContext(LoginContext)
@@ -30,13 +31,15 @@ function Profile () {
   }
 
   return (
-    <div className="profile-container">
-      <h2>{`Bienvenido/a, ${userLogged}!`}</h2>
-      <img src={imgProfile}/>
-      <Cart />
-      <button onClick={handleLogout}> Logout </button>
+    <div className="profile-main-container ">
+        <div className="profile-container">
+          <h2>{`Bienvenido/a, ${userLogged}!`}</h2>
+          <button onClick={handleLogout}> Logout </button>
+          <img src={imgProfile}/>
+          <Cart />
+        </div>
     </div>
-  )
+);
 }
 
 export default Profile

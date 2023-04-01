@@ -15,7 +15,6 @@ const logError = require('./utils/log');
 const eventRoutes = require('./routes/event.routes');
 const userRoutes = require('./routes/user.routes');
 
-
 //Configuración del servidor
 connect();
 const PORT = process.env.PORT || 3000;
@@ -24,6 +23,7 @@ const server = express();
 // Middlewares
 
     // CONVERTIR A JSON LA REQ
+
     server.use(express.json());
     server.use(express.urlencoded({extended: true}));
 

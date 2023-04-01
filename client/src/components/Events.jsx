@@ -1,20 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { useContext } from 'react';
-import { CartContext } from '../context/cart-context';
+import React, { useEffect, useState, useContext } from 'react';
 import '../styles/Events.css';
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+import { UserEventsContext } from '../context/user-events-context '
 
 
 function Events ({ events }) {
-  const { cart, setCart } = useContext(CartContext)
+  const {userEvents, setUserEvents} = useContext(UserEventsContext)
 
   const addToCart = (event) => {
-     const eventExist = cart.find((item) => item._id === event._id)
+    const token = localStorage.getItem('token');
+    const decodeToken = jwt_decode(token);
+    const userId = decodeToken.id;
 
-     if (!eventExist) {
-      setCart((prevState) =>  ([ ...prevState, event ]))
+    const eventExist = userEvents?.find(id => event._id === id);
+    if (eventExist) {
+      return;
     }
+
+    fetch('https://eventasia-server.vercel.app/users', {
+      method: 'PUT',
+      headers: { 
+        'Content-Type': 'application/json' , 
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ userId, eventId: event._id })
+    })
+    .then(res => res.json())
+    .then(data => { 
+      const newUserEvents = data.events;
+      setUserEvents(newUserEvents);
+      console.log(data);
+    })
+    .catch(error => console.log(error));     
   }
+
 
   return (
     <div className="map-events-container">
@@ -27,7 +47,7 @@ function Events ({ events }) {
             <div className='event-date'>{`${event.dtstart} - ${event.dtend}`}</div>
             <div className='event-price'>{ event.price == 0 ? 'GRATIS' :`${event.price}€`}</div>
             <div className="event-buttons">
-            <button className="subscribe-button" onClick={() => addToCart(event)} >Suscríbete</button>        
+              <button className="subscribe-button" onClick={() => addToCart(event)} >Suscríbete</button>        
               <Link to={`/event/${event._id}`}><button className="info-button">Info</button></Link>
             </div>
           </div>

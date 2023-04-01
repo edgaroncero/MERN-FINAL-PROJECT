@@ -1,7 +1,7 @@
 import { Arrow, dMoon, lMoon, Home, User} from '../config/icons-export'
 import { Link } from 'react-router-dom'
 import '../styles/component.styles.css'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { LoginContext } from '../context/login-context'
 
 //Chakra
@@ -10,12 +10,18 @@ import { LoginContext } from '../context/login-context'
 //import { FaSun, FaMoon } from "react-icons/fa";
 
 function Navbar () {
+//  const [showCategories, setShowCategories] = useState(false)
+//  const [showCities, setShowCities] = useState(false)
  const {isLogin} = useContext(LoginContext)
+
+//  const handleShowCategories = () => setShowCategories(!showCategories)
+//  const handleShowCities = () => setShowCities(!showCities)
 
    //Chkra
 //   const { colorMode, toggleColorMode } = useColorMode(); 
 //   const isDark = colorMode === "dark";
-//
+
+
   return (
       <header>
         <div className='header-a'>
@@ -28,12 +34,24 @@ function Navbar () {
         <div className='header-b'>   
           <Link>
           <div className='btn-img'>
-             <button className='header-a_btn'> <h4>Categoría</h4><img src={Arrow} /> </button> 
+             <button 
+             className='header-a_btn'
+             onClick={() => handleShowCategories()}
+             > 
+             <h4>Categorías</h4>
+             <img src={Arrow} /> 
+             </button> 
           </div>
           </Link>        
           <Link>
           <div className='btn-img'>
-             <button className='header-a_btn'><h4>Ciudad</h4><img src={Arrow} /></button> 
+             <button 
+             className='header-a_btn'
+             onClick={() => handleShowCities()}
+             >
+             <h4>Ciudades</h4>
+             <img src={Arrow} />
+             </button> 
           </div>
           </Link>  
           <Link to="/login">

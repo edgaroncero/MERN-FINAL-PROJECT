@@ -84,7 +84,6 @@ router.get('/:id', async (req, res, next) => {
         return next(error);
     }
 });
-
     //Events by CITY
 
 router.get('/city/:city', async (req, res, next) => {

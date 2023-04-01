@@ -26,5 +26,20 @@ const eventSchema = new Schema(
     }
 );
 
+/* // função para converter data de "yyyy-mm-dd" para "dd-mm-yyyy"
+function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString();
+    return `${day}-${month}-${year}`;
+}
+
+eventSchema.pre('save', function(next) {
+    this.dtstart = formatDate(this.dtstart);
+    this.dtend = formatDate(this.dtend);
+    next();
+}); */
+    
 const Event = mongoose.model('Event', eventSchema);
 module.exports = Event;
