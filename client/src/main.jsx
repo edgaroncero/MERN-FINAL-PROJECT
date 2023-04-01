@@ -7,6 +7,9 @@ import { LoginProvider } from './context/login-context'
 import { UserEventsProvider } from './context/user-events-context '
 
 
+//chakra
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
      <UserEventsProvider>
