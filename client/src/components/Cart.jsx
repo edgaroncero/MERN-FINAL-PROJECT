@@ -2,6 +2,8 @@ import { useContext, useEffect } from 'react'
 import { UserEventsContext } from '../context/user-events-context '
 import jwt_decode from 'jwt-decode';
 
+import '../styles/Cart.css'
+
 function Cart () {
 const {userEvents, setUserEvents} = useContext(UserEventsContext)
 

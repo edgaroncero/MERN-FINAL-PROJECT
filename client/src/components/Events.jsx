@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import { UserEventsContext } from '../context/user-events-context '
 
-
 function Events ({ events }) {
   const {userEvents, setUserEvents} = useContext(UserEventsContext)
 
