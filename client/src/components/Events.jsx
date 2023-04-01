@@ -1,34 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import '../styles/Events.css';
 import { Link } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
-// import { jwt } from 'jsonwebtoken';
-
+import { UserEventsContext } from '../context/user-events-context '
 
 function Events ({ events }) {
-  
+  const {userEvents, setUserEvents} = useContext(UserEventsContext)
 
   const addToCart = (event) => {
+    const token = localStorage.getItem('token');
+    const decodeToken = jwt_decode(token);
+    const userId = decodeToken.id;
 
-      const token = localStorage.getItem('token')
+    const eventExist = userEvents?.find(id => event._id === id);
+    if (eventExist) {
+      return;
+    }
 
-      const decodeToken = jwt_decode(token)
-      const userId = decodeToken.id
-      
-
-      fetch('https://eventasia-server.vercel.app/users', {
-        method: 'PUT',
-        headers: { 
-          'Content-Type': 'application/json' , 
-          'Authorization': `Bearer ${token}`
+    fetch('https://eventasia-server.vercel.app/users', {
+      method: 'PUT',
+      headers: { 
+        'Content-Type': 'application/json' , 
+        'Authorization': `Bearer ${token}`
       },
-        body: JSON.stringify({ userId, eventId: event._id })
-      })
-      .then(res => res.json())
-      .then(data => console.log(data))
-      .catch(error => console.log(error));
-       
+      body: JSON.stringify({ userId, eventId: event._id })
+    })
+    .then(res => res.json())
+    .then(data => { 
+      const newUserEvents = data.events;
+      setUserEvents(newUserEvents);
+      console.log(data);
+    })
+    .catch(error => console.log(error));     
   }
+
 
   return (
     <div className="map-events-container">

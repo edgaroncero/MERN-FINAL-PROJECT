@@ -1,23 +1,92 @@
-import React from 'react'
-import { useContext } from 'react'
-import { CartContext } from '../context/cart-context'
+import { useContext, useEffect } from 'react'
+import { UserEventsContext } from '../context/user-events-context '
+import jwt_decode from 'jwt-decode';
 
 function Cart () {
- const { cart } = useContext(CartContext)
- console.log(cart);
+const {userEvents, setUserEvents} = useContext(UserEventsContext)
+
+  useEffect(() => {
+         const token = localStorage.getItem('token')
+         const decodedToken = jwt_decode(token);
+         const userId = decodedToken.id;
+
+            fetch(`https://eventasia-server.vercel.app/users/${userId}`, {
+             method: 'GET',
+             headers: { 
+               'Content-Type': 'application/json' , 
+               'Authorization': `Bearer ${token}`
+             }
+          }).then(res => res.json())
+            .then(data => {
+              const newUserEvents = data
+              setUserEvents(newUserEvents)
+              console.log(newUserEvents);
+            })
+            .catch((err) => console.log(err))
+  }, [])
+
+  const removeEvent = (item) => {
+    const token = localStorage.getItem('token')
+    const decodedToken = jwt_decode(token);
+    const userId = decodedToken.id;
+    const eventId = item._id
+  
+    fetch(`https://eventasia-server.vercel.app/users/${userId}/events/${eventId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      // Aquí llamamos de nuevo a la api para tener los datos actualizados
+      fetch(`https://eventasia-server.vercel.app/users/${userId}`, {
+        method: 'GET',
+        headers: { 
+          'Content-Type': 'application/json' , 
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        const newUserEvents = data
+        setUserEvents(newUserEvents)
+        console.log(newUserEvents);
+      })
+      .catch((err) => console.log(err))
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
   return (
-    <div>
-       {cart.map((item) => (
-        <div key={item._id} style={{color: 'white', backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,1)), url(${item.img})`}}>
-            <div >{item.title}</div>
-            <div >{item.category}</div>
-            <div >{item.location} - {item.city}</div>
-            <div >{`${item.dtstart} - ${item.dtend}`}</div>
-            <div >{ item.price == 0 ? 'GRATIS' :`${item.price}€`}</div>
+    <div className="cart-container">
+      {userEvents?.map((item, index) => (
+        <div key={index} className="cart-item">
+          <div
+            className="cart-item-image" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,1)), url(${item.img})`}}/>
+          <div className="cart-item-details">
+            <p className="cart-item-title">{item.title}</p>
+            <p className="cart-item-category">{item.category}</p>
+            <p className="cart-item-location">{`${item.location} - ${item.city}`}</p>
+            <p className="cart-item-dates">{`${item.dtstart} - ${item.dtend}`}</p>
+            <p className="cart-item-price">
+              {item.price === 0 ? 'GRATIS' : `${item.price}€`}
+            </p>
+            <button
+              className="cart-item-button"
+              onClick={() => removeEvent(item)}
+            >
+              Remove Subscription
+            </button>
           </div>
-          ))}
-     </div>  
-  )
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default Cart

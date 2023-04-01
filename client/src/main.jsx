@@ -4,16 +4,17 @@ import App from './App'
 import './index.css'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { LoginProvider } from './context/login-context'
-import { CartProvider } from './context/cart-context'
+import { UserEventsProvider } from './context/user-events-context '
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <CartProvider>
-      <LoginProvider>
-            <Router>
-              <App />
-           </Router>
-         </LoginProvider> 
-      </CartProvider> 
+     <UserEventsProvider>
+           <LoginProvider>
+               <Router>
+                 <App />
+              </Router>
+            </LoginProvider> 
+     </UserEventsProvider>
   </React.StrictMode>
 )

@@ -7,4 +7,4 @@ import User from '../icons/user.svg'
 import Logo from '../icons/Logo.svg'
 import Logotype from '../icons/Logotipo.svg'
 
-export { Arrow, dMoon, lMoon, Home, imgProfile, User, Logo, Logotype }
+export { Arrow, dMoon, lMoon, Home, imgProfile, User, Logo, Logotype,  }
