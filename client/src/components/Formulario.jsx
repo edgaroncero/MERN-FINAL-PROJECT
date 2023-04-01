@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Events from './Events';
+import News from './News';
 import '../styles/Formulario.css';
 
 //https://server-chi-ten.vercel.app/events
@@ -121,8 +122,8 @@ function Formulario() {
           <select onChange={handleCategory} id="categoria" name="categoria">
           <option value="All">Cualquiera</option>
            <option value="Socio Cultural">Socio Cultural</option>
-           <option value=" Arte y Belleza">Arte y Belleza</option>
-            <option value="Gastronomia">Gastronomia</option>
+           <option value="Belleza y Salud">Arte y Belleza</option>
+            <option value="Gastronomía">Gastronomía</option>
             <option value="Actividades Infantiles">Actividades Infantiles</option>
             <option value="Entretenimiento">Entretenimiento</option>
             <option value="Deportes y Aventura">Deportes y Aventura</option>
@@ -152,7 +153,10 @@ function Formulario() {
     </form>
        { filteredEvents.length === 0 
        ? <p className='no-results'>Lo sentimos, no hay ningún evento con estas características. Prueba otra vez</p> 
-       : <Events events={filteredEvents} />}
+       : <div>
+      <Events events={filteredEvents} />
+      </div>
+       }
     </div>
   );
 }
