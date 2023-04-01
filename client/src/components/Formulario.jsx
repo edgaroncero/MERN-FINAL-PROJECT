@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Events from './Events';
-import News from './News';
+
 import '../styles/Formulario.css';
+
 
 //https://server-chi-ten.vercel.app/events
 
@@ -157,6 +158,7 @@ function Formulario() {
       <Events events={filteredEvents} />
       </div>
        }
+
     </div>
   );
 }

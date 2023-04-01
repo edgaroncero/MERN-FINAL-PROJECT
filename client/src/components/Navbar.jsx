@@ -4,6 +4,11 @@ import '../styles/component.styles.css'
 import { useContext, useState } from 'react'
 import { LoginContext } from '../context/login-context'
 
+//Chakra
+//import { IconButton } from "@chakra-ui/button";
+//import { useColorMode } from "@chakra-ui/color-mode";
+//import { FaSun, FaMoon } from "react-icons/fa";
+
 function Navbar () {
 //  const [showCategories, setShowCategories] = useState(false)
 //  const [showCities, setShowCities] = useState(false)
@@ -11,6 +16,10 @@ function Navbar () {
 
 //  const handleShowCategories = () => setShowCategories(!showCategories)
 //  const handleShowCities = () => setShowCities(!showCities)
+
+   //Chkra
+//   const { colorMode, toggleColorMode } = useColorMode(); 
+//   const isDark = colorMode === "dark";
 
 
   return (
@@ -56,9 +65,9 @@ function Navbar () {
              <img src={User}/>
            </button>
          </Link>)}
-           <button className='header-a_btn'>
+         <button className='header-a_btn'>
              <img src={dMoon}/>
-           </button>   
+           </button>  
         </div>    
       </header>
   )

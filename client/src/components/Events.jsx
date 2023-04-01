@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import { UserEventsContext } from '../context/user-events-context '
 
+
 function Events ({ events }) {
   const {userEvents, setUserEvents} = useContext(UserEventsContext)
 
@@ -46,10 +47,8 @@ function Events ({ events }) {
             <div className='event-date'>{`${event.dtstart} - ${event.dtend}`}</div>
             <div className='event-price'>{ event.price == 0 ? 'GRATIS' :`${event.price}€`}</div>
             <div className="event-buttons">
-
               <button className="subscribe-button" onClick={() => addToCart(event)} >Suscríbete</button>        
               <Link to={`/event/${event._id}`}><button className="info-button">Info</button></Link>
-
             </div>
           </div>
         ))}
