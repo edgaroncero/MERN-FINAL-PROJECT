@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Events from './Events';
+import News from './News';
 import '../styles/Formulario.css';
 
 //https://server-chi-ten.vercel.app/events
@@ -152,7 +153,10 @@ function Formulario() {
     </form>
        { filteredEvents.length === 0 
        ? <p className='no-results'>Lo sentimos, no hay ningún evento con estas características. Prueba otra vez</p> 
-       : <Events events={filteredEvents} />}
+       : <div>
+      <Events events={filteredEvents} />
+      </div>
+       }
     </div>
   );
 }
