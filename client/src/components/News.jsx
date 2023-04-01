@@ -19,22 +19,17 @@ function News () {
   },[])
 
   const filterEventsNews = (events) => {
-    const startDate = filters.startDate.split('/').reverse().join('-')
-    const endDate = filters.endDate.split('/').reverse().join('-')
-    return events.filter(event => {
-      return (
-        (
-          !filters.startDate || 
-          event.dtstart >= startDate
-         ) &&
-         ( 
-           !filters.endDate || 
-           event.dtend <= endDate
-         )
-      )
-    })
-  }
-
+    const startDate = filters.startDate
+      ? new Date(filters.startDate.split('/').reverse().join('-'))
+      : new Date();
+    const endDate = filters.endDate
+      ? new Date(filters.endDate.split('/').reverse().join('-'))
+      : new Date('9999-12-31');
+    return events.filter((event) => {
+      const eventDate = new Date(event.dtstart);
+      return eventDate >= startDate && eventDate <= endDate;
+    });
+  };
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(filteredEvents)
@@ -51,22 +46,18 @@ function News () {
   const filteredEvents = filterEventsNews(events);
 
   return (
-    <div className="map-news-container">
-     <h2>Próximos Eventos</h2>
+   
       <div className="news-container">
-        {events.map(event => (
+      <h2>Próximos Eventos</h2>
+      {filteredEvents.slice(0, 11).map(event => (
           <div key={event._id} className="news">
-            <img className="news-img" src={event.img} alt={event.title} />
-            <div className='news-title'>{event.title}</div>
-            <div className='news-location'>{event.city}</div>
-            <div className='news-date'>{`${event.dtstart}`}</div>
-            <div className="news-buttons">
+            <div className='news-title'>{event.title} </div>
+            <img className="news-img" src={event.img}/>
               <Link to={`/event/${event._id}`}><button className="news-info-button">Info</button></Link>
-            </div>
+            <div className='news-location'>{event.city} {`${event.dtstart}`}</div>
           </div>
         ))}
       </div>
-    </div>
   );
 };
 

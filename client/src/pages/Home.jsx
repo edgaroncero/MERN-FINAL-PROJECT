@@ -1,5 +1,7 @@
 import React from 'react'
-import { Events, News, Formulario } from '../config/pages-export'
+import { News, Formulario } from '../config/pages-export'
+import '../styles/page-styles.css'
+
 
 
 function Home() {
