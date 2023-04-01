@@ -4,8 +4,18 @@ import '../styles/component.styles.css'
 import { useContext } from 'react'
 import { LoginContext } from '../context/login-context'
 
+//Chakra
+import { IconButton } from "@chakra-ui/button";
+import { useColorMode } from "@chakra-ui/color-mode";
+import { FaSun, FaMoon } from "react-icons/fa";
+
 function Navbar () {
  const {isLogin} = useContext(LoginContext)
+
+   //Chkra
+   const { colorMode, toggleColorMode } = useColorMode(); 
+   const isDark = colorMode === "dark";
+
   return (
       <header>
         <div className='header-a'>
@@ -37,9 +47,8 @@ function Navbar () {
              <img src={User}/>
            </button>
          </Link>)}
-           <button className='header-a_btn'>
-             <img src={dMoon}/>
-           </button>   
+         <IconButton ml={9} icon={isDark ? <FaSun /> : <FaMoon />} 
+        isRound="true" onClick={toggleColorMode}></IconButton>
         </div>    
       </header>
   )

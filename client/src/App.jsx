@@ -6,8 +6,6 @@ import { Login, Register, Profile, Home, Events, Footer, Navbar, News, Formulari
 import { LoginContext } from './context/login-context';
 
 
-
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const { isLogin, setIsLogin } = useContext(LoginContext)

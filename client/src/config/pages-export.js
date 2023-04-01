@@ -11,4 +11,4 @@ import News from "../components/News";
 import Formulario from "../components/Formulario";
 import Cart from "../components/Cart";
 
-export { Login, Register, Profile, Home, Events, Footer, Navbar, News, Formulario, Cart }
+export { Login, Register, Profile, Home, Events, Footer, Navbar, News, Formulario, Cart, Event }
