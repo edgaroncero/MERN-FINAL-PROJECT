@@ -1,0 +1,125 @@
+a {
+  text-decoration: none;
+}
+
+.cardEvent {
+  width: 700px;
+  height: auto;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: justify;
+}
+
+.cardEvent__img {
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  padding-bottom: 1rem;
+}
+
+.cardEvent__title {
+  margin: 15px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: brown;
+}
+
+.cardEvent__info,
+.cardEvent__price,
+.cardEvent__link,
+.cardEvent__p,
+.cardEvent__map,
+.cardEvent__dates {
+  font-weight: 400;
+  letter-spacing: 0;
+  padding-bottom: 1rem;
+  font-size: 18px;
+  line-height: 28px;
+  margin: 0;
+  margin: 15px;
+  word-wrap: break-word;
+
+}
+
+.cardEvent__infogral {
+  display: flex;
+  flex-direction: row;
+}
+
+.cardEvent__infogral-item {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  width: 325px;
+  height: 50px;
+  padding: 10px 20px;
+  background-color:#fe1749;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: sans-serif;
+}
+
+.button:hover {
+  background-color:#fe1749;
+}
+
+@media screen and (max-width: 640px) {
+  .cardEvent {
+    width: 300px;
+    margin: 50px auto;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: justify;
+  }
+
+  .cardEvent__img {
+    width: 250px;
+    height: 100%;
+
+  }
+  .cardEvent__info,
+  .cardEvent__price,
+  .cardEvent__link,
+  .cardEvent__p,
+  .cardEvent__map,
+  .cardEvent__dates {
+    text-align: justify;
+    word-wrap: break-word;
+}
+
+
+  .cardEvent__infogral{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .button {
+    width: 250px;
+    margin: 5px;
+
+  }
+}
+
+@media screen and (min-width: 640px) and (max-width: 1280px) {
+  .cardEvent {
+    width: 700px;
+    height: auto;
+  }
+
+}
