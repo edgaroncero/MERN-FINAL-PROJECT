@@ -68,8 +68,11 @@ const {userEvents, setUserEvents} = useContext(UserEventsContext)
     <div className="cart-container">
       {userEvents?.map((item, index) => (
         <div key={index} className="cart-item">
+        
           <div
-            className="cart-item-image" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,1)), url(${item.img})`}}/>
+            className="cart-item-image" style={{ backgroundImage: `url(${item.img})`}}>
+            <img className="cart-item-image" src={item.img}/>
+          </div>
           <div className="cart-item-details">
             <p className="cart-item-title">{item.title}</p>
             <p className="cart-item-category">{item.category}</p>
