@@ -1,14 +1,20 @@
+    button{
+        cursor: pointer;
+    }
     .header-a_btn-logotype img{
         width: 120px;
+        cursor: pointer;
     }
     .header-a_btn-logo img{
        display: none;
+       cursor: pointer;
     }
     .header-b{
         display: flex;
         flex-direction: row;
         align-items: center;
-        margin: 20px
+        margin: 20px;
+        cursor: pointer
     }
     .btn-img button {
         display: flex;
@@ -16,18 +22,19 @@
         justify-content: center;
         align-items: center;
         text-decoration: none;
+        cursor: pointer;
     }
 
     .search-container {
-    background-color: white;
-    width: 700px;
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 50px;
-    border-radius: 10px;
+        background-color: white;
+        width: 700px;
+        height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 50px;
+        border-radius: 10px;
     }
 
     .search-container label{

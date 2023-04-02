@@ -10,4 +10,9 @@ import Facebook from '../icons/facebook.svg'
 import Twitter from '../icons/twitter.svg'
 import Instagram from '../icons/instagram.svg'
 
-export { Arrow, dMoon, lMoon, Home, imgProfile, User, Logo, Logotype, Facebook, Twitter, Instagram }
+//Mabel
+import Calendar from '../icons/calendar.svg'
+import Web from '../icons/web.svg'
+import Price from '../icons/price.svg'
+
+export { Arrow, dMoon, lMoon, Home, imgProfile, User, Logo, Logotype, Facebook, Twitter, Instagram, Calendar, Web, Price }
