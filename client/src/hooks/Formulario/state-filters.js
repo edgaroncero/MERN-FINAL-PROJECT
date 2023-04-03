@@ -1,6 +1,4 @@
 import { useState } from "react"
-
-
 export function useHandleFiltersChange () {
 const [maxPrice, setMaxPrice] = useState(600)
 const [filters, setFilters] = useState({
@@ -39,4 +37,5 @@ const [filters, setFilters] = useState({
   
     return { handleTitle, handleCategory, handleCity, handleStartDate, handlePrice, handleEndDate, filters, maxPrice }
   }
+
     
