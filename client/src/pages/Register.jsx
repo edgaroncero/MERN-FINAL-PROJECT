@@ -1,6 +1,6 @@
 import '../styles/page-styles.css'
 import { Link } from 'react-router-dom'
-import { useReducer } from 'react'
+import { useReducer, useState } from 'react'
 import { useValidate } from '../hooks/form-validation'
 import { useNavigate } from "react-router-dom"
 
@@ -45,6 +45,8 @@ function reducer(state, action) {
 }
 
 function Register() {
+  const [emailRegisterError, setEmailRegisterError] = useState('')
+  const [userRegisterError, setUserRegisterError] = useState('')
   const [state, dispatch] = useReducer(reducer, initialState)
   const { name, lastname, username, email, password } = state
   const { nameErrors, lastnameErrors, emailErrors, passwordErrors, usernameErrors, validateForm } = useValidate(state)
@@ -64,6 +66,12 @@ function Register() {
       .then(data =>  {
          if (data.message === "New User created") {
          navigate('/login') }
+         if (data.message === "This username already exist"){
+          setUserRegisterError('Ya existe un usuario así')
+         }
+         else if (data.message === "This email already exist"){
+          setEmailRegisterError('Este correo electronico ya está registrado')
+         }
          console.log(data)}
       )
       .catch(err => console.log(err))
@@ -107,6 +115,7 @@ function Register() {
                            Nombre de Usuario
                            <input type="text" value={username} onChange={e => dispatch({ type: 'SET_USERNAME', payload: e.target.value })}  />
                            {usernameErrors && <span className='error'>{usernameErrors}</span> }
+                           {userRegisterError && <span className='error'>{userRegisterError}</span> }
                            </label>
                         </div>
                     <div>
@@ -114,6 +123,7 @@ function Register() {
                          Email
                          <input type="text" value={email} onChange={e => dispatch({ type: 'SET_EMAIL', payload: e.target.value })}    />
                          {emailErrors && <span className='error'>{emailErrors}</span> }
+                         {emailRegisterError && !emailErrors && <span className='error'>{emailRegisterError}</span> }
                         </label>
                     </div>
 
