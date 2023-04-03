@@ -1,96 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import Events from './Events';
-
 import '../styles/Formulario.css';
+import Events from './Events';
+import { getEventsApi } from '../services/events';
+import { useState, useEffect } from 'react';
+import { useFilterEvents } from '../hooks/Formulario/filtered-events';
+import { useHandleFiltersChange } from '../hooks/Formulario/state-filters';
 
-
-//https://server-chi-ten.vercel.app/events
 
 function Formulario() {
-  const [maxPrice, setMaxPrice] = useState(600)
   const [events, setEvents] = useState([])
-  const [filters, setFilters] = useState({
-    title: '',
-    category: 'All',
-    city: 'All',
-    startDate: '',
-    endDate: '',
-    maxPrice: 600
-  })
+  const { handleTitle, handleCategory, handleCity, handleStartDate, handlePrice, handleEndDate, filters, maxPrice } = useHandleFiltersChange()
+  const { filteredEvents } = useFilterEvents({ events, filters})
 
   useEffect(() => {
-    fetch('https://eventasia-server.vercel.app/events')
-    .then(res => res.json())
-    .then(data => setEvents(data))
+    getEventsApi().then(data => setEvents(data))
   },[])
-  
-  const filterEvents = (events) => {
-    const startDate = filters.startDate.split('/').reverse().join('-')
-    const endDate = filters.endDate.split('/').reverse().join('-')
-    return events.filter(event => {
-      return (
-        event.price <= filters.maxPrice &&
-         (
-           !filters.title ||
-           event.title.toLowerCase().includes(filters.title.toLowerCase())
-         ) &&
-         (
-            filters.category === 'All' ||
-            event.category === filters.category
-         ) && 
-         (
-           filters.city === 'All' ||
-           event.city === filters.city
-         ) && 
-         (
-          !filters.startDate || 
-          event.dtstart >= startDate
-         ) &&
-         ( 
-           !filters.endDate || 
-           event.dtend <= endDate
-         )
-      )
-    })
-  }
-
-  const filteredEvents = filterEvents(events);
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(filteredEvents)
-  }
-
-  const handleTitle = (e) => {
-    setFilters(prevState => ({ ...prevState, title: e.target.value }))
-  }
- 
-  const handleCategory = (e) => {
-    setFilters(prevState => ({ ...prevState, category: e.target.value }))
-  }
-
-  const handleCity = (e) => {
-    setFilters(prevState => ({ ...prevState, city: e.target.value }))
-  }
-
-  const handleStartDate = (e) => {
-    setFilters(prevState => ({ ...prevState, startDate: e.target.value }))
-  }
-
-  const handlePrice = (e) => {
-    setMaxPrice(e.target.value)
-    setFilters(prevstate => ({...prevstate, maxPrice: e.target.value}))
-  }
-
-  const handleEndDate = (e) => {
-    setFilters(prevState => ({ ...prevState, endDate: e.target.value }))
-  }
-
 
   return (
     <div className='main-container'>
-    <form onSubmit={handleSubmit} className="form-container">
+    <form className="form-container">
        <div className="campo">
         <label htmlFor="nombre">Nombre:</label>
         <input onChange={handleTitle} 
@@ -152,7 +79,7 @@ function Formulario() {
 
       <button type="submit">Enviar</button>
     </form>
-       { filteredEvents.length === 0 
+       { filteredEvents?.length === 0 
        ? <p className='no-results'>Lo sentimos, no hay ningún evento con estas características. Prueba otra vez</p> 
        : <div>
       <Events events={filteredEvents} />
