@@ -1,70 +1,39 @@
-import { Arrow, dMoon, lMoon, Home, User} from '../config/icons-export'
-import { Link } from 'react-router-dom'
-import '../styles/component.styles.css'
-import { useContext, useState } from 'react'
-import { LoginContext } from '../context/login-context'
+import React, { useEffect, useState } from 'react';
+import '../styles/news.css';
+import { Link } from 'react-router-dom';
+import { getEventsApi } from '../services/events';
+import { useFilterNews } from '../hooks/News/filtered-news';
+import jwt_decode from 'jwt-decode';
 
 
+function News () {
+ 
+  const [events, setEvents] = useState([])
+  const [filters, setFilters] = useState({
+    startDate: '',
+    endDate: ''
+  })
+ const { filteredNews } = useFilterNews({ events, filters })
 
-function Navbar () {
-//  const [showCategories, setShowCategories] = useState(false)
-//  const [showCities, setShowCities] = useState(false)
- const {isLogin} = useContext(LoginContext)
-
-//  const handleShowCategories = () => setShowCategories(!showCategories)
-//  const handleShowCities = () => setShowCities(!showCities)
-
-
+  useEffect(() => {
+    getEventsApi().then(data => setEvents(data))
+  },[])
 
   return (
-      <header>
-        <div className='header-a'>
-          <Link to="/">
-            <button className='header-a_btn cursor'>
-              <img src={Home}/>
-            </button> 
-          </Link>
-        </div> 
-        <div className='header-b'>   
-          <Link>
-          <div className='btn-img'>
-             <button 
-             className='header-a_btn'
-             onClick={() => handleShowCategories()}
-             > 
-             <h4>Categorías</h4>
-             <img src={Arrow} /> 
-             </button> 
+   
+      <div className="news-container">
+      <h2>Próximos Eventos</h2>
+      {filteredNews.slice(0, 11).map(event => (
+          <div key={event._id} className="news">
+            <div className='news-title'>{event.title} </div>
+            <img className="news-img" src={event.img}/>
+              <Link to={`/event/${event._id}`}><button className="news-info-button">Info</button></Link>
+            <div className='news-location'>{event.city} {`${event.dtstart}`}</div>
           </div>
-          </Link>        
-          <Link>
-          <div className='btn-img'>
-             <button 
-             className='header-a_btn'
-             onClick={() => handleShowCities()}
-             >
-             <h4>Ciudades</h4>
-             <img src={Arrow} />
-             </button> 
-          </div>
-          </Link>  
-          <Link to="/login">
-            <button className='header-a_btn'><h4>Sign In</h4></button>
-         </Link>
-         <Link to="/registrate">
-           <button className='header-a_btn'><h4>Sign Up</h4></button>
-         </Link>
-         { isLogin && (<Link to="/profile">
-           <button className='header-a_btn'>
-             <img src={User}/>
-           </button>
-         </Link>)}
-         <button className='header-a_btn'>
-             <img src={dMoon}/>
-           </button>  
-        </div>    
-      </header>
-  )
-}
+        ))}
+      </div>
+  );
+};
 
-export default Navbar
+
+export default News;
