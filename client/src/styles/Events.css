@@ -3,7 +3,6 @@
   justify-content: center;
 }
 
-
 .events-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -19,28 +18,25 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-}
 
+}
 
 .event-title {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
-  z-index: 2;
   color: #fff; 
 }
 
 .event-category {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
-  z-index: 2;
   color: #fff;
 }
 
 .event-location {
   font-size: 1rem;
   margin-bottom: 0.5rem;
-  z-index: 2;
   color: #fff;
 }
 
@@ -48,7 +44,6 @@
   font-size: 1rem;
   margin-top: auto;
   margin-bottom: 0.5rem;
-  z-index: 2;
   color: #fff;
 }
 
@@ -56,7 +51,6 @@
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
-  z-index: 2;
   color: #fff;
 }
 
@@ -74,6 +68,12 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+  cursor: pointer;
+}
+.subscribe-button:hover{
+  opacity: 0.5;
 }
 
 .info-button {
@@ -84,5 +84,27 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+  cursor: pointer;
   
+}
+.info-button:hover{
+  opacity: 0.5;
+}
+
+@media screen and (min-width: 640px) and (max-width: 1280px) {
+  .events-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .events-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+  }
 }

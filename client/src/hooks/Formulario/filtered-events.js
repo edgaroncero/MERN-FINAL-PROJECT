@@ -1,5 +1,3 @@
-
-
 export const useFilterEvents = ({ events, filters }) => {
     const filterEvents = (events) => {
       const startDate = filters.startDate.split('/').reverse().join('-')

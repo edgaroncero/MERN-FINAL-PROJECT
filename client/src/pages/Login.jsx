@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom'
 import { useValidate } from '../hooks/form-validation'
 
 
+import Test from '../components/Test'
+
 function Login () {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -74,6 +76,7 @@ function Login () {
                 </div>
             </div>
          </div>
+
        </div>
   )
 }

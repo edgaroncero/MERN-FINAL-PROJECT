@@ -1,4 +1,3 @@
-
 export const useFilterNews = ({ events, filters }) => {
     const filterEventsNews = (events) => {
       const startDate = filters.startDate = new Date();
@@ -8,8 +7,6 @@ export const useFilterNews = ({ events, filters }) => {
         return eventDate >= startDate && eventDate <= endDate;
       });
     };
-
     const filteredNews= filterEventsNews(events);
-
     return { filteredNews }
   }

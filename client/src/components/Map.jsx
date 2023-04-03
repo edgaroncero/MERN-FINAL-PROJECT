@@ -3,11 +3,10 @@ import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 
 
 const containerStyle = {
-    height: '300px',
-    width: '275px',
-
+    height: '100%',
+    width: '100%',
+    opacity: '70%'
   };
-  
 
   function Map({center}) {
     
@@ -19,8 +18,11 @@ const containerStyle = {
   const [map, setMap] = useState(null);
 
   const onLoad = (map) => {
-    const bounds = new window.google.maps.LatLngBounds(center);
-    setMap(map)
+    const bounds = new window.google.maps.LatLngBounds({ lat: center.lat -0.02, lng: center.lng  -0.02 });
+    // Ajustar el zoom y la posición del mapa (HACIA LA IZQUIERDA DEL MARKER)
+    map.setZoom(12);
+    map.panTo({ lat: center.lat -0.02, lng: center.lng  -0.02 });
+    setMap(map);
   };
 
   const onUnmount = () => {
@@ -35,12 +37,10 @@ const containerStyle = {
   return isLoaded ? (
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={center}
-        zoom={15}
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
-        <Marker position={markerPosition} />
+        <Marker position={center} />
         <></>
       </GoogleMap>
   ) : <></>

@@ -5,10 +5,13 @@ const bcrypt = require('bcrypt');
 //Estrategia de auth
 const jwt = require('jsonwebtoken');
 
+
 const register = async (req, res, next) => {
     try {
         const email = await User.findOne({ email: req.body.email});
         const username = await User.findOne({ username: req.body.username});
+        const password = req.body.password;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         if (email) {
             return res.json({
                 status: 400,
@@ -21,7 +24,9 @@ const register = async (req, res, next) => {
                 message: 'This username already exist',
                 data: null
             })
-        }
+        } if (!passwordRegex.test(password)) {
+            return res.status(400).send('La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número');
+          }
         const newUser = new User();       
         const pwdHash = await bcrypt.hash(req.body.password, 10);
         if (req.file) {
@@ -49,7 +54,6 @@ const register = async (req, res, next) => {
         return next(error);
     }
 };
-
 const login = async (req, res, next) => {
     try {
         const userInfo = await User.findOne({ email: req.body.email});
@@ -193,6 +197,7 @@ const logout = (req, res, next) => {
     }
 };
 
+
 module.exports = {
     register,
     login,
@@ -200,5 +205,6 @@ module.exports = {
     isAuth,
     addEvent,
     editUser,
-    removeEvent
+    removeEvent, 
+    
 }
