@@ -1,21 +1,26 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from "react-router-dom";
+
+//Componentes
 import { Calendar, Price, Web } from '../config/icons-export';
 import Side from '../components/Side';
-
-import { useParams } from "react-router-dom";
 import Map from '../components/Map';
 
+//Stilos
 import '../styles/event-style.css';
+import "../styles/Loading.css"; 
 
 
-function Event (props) {
+function Event () {
+
+    //SPINNNER 
 
     // DETALLE DEL EVENTO
     const { id } = useParams();
     let [eventCard, setEventCard] = useState({});
     let [isLoading, setIsLoading] = useState(false);
     
-    // BOTONES INFO
+    // BOTONES INFO GRAL
     const [showDivPrice, setShowDivPrice] = useState(false);
     const [showDivLink, setShowDivLink] = useState(false);
     const [showDivDates, setShowDivDates] = useState(false);
@@ -30,7 +35,7 @@ function Event (props) {
         setShowDivDates(!showDivDates);
       };
 
-    // MOSTRAR CONTENIDO
+    // MOSTRAR CONTENIDO INFO
     const [showAll, setShowAll] = useState(false);
     const toggleShowAll = () => {
       setShowAll(!showAll);
@@ -44,16 +49,22 @@ function Event (props) {
             setEventCard(data);
             console.log(data);
         })
-        .finally(() => setIsLoading(false));
+        .finally(() => {
+          setIsLoading(false);
+        });
     }, [id]);
 
-    const loading = isLoading ? 'Loading .......' : null;
+    const loading = isLoading ? null : null;
 
  return (
       <div className="infoEvent">
-        {loading}
-        {eventCard && (
-          <div className="cardEvent">
+        { isLoading ? (
+          <div className="loading-container">
+            <div className="loading-spinner"></div>
+          </div>
+          ) : (
+
+        <div className="cardEvent">
 
             <img className="cardEvent__img" src={eventCard.img} alt={eventCard.title} />
 
@@ -85,8 +96,7 @@ function Event (props) {
                         {showDivLink && (
                           <div className="showDiv">
                             <p className="cardEvent__link"> <a href={eventCard.link} target="_blank" rel="noopener noreferrer">Acceda aquí a la web</a></p>
-                          </div>
-                        )}
+                          </div>) } 
 
                     <button className="button" onClick={toggleDivDates}>
                       <div className="icon"><img src={Calendar}/></div>
@@ -112,8 +122,8 @@ function Event (props) {
             {!eventCard && <p>No se encontró el evento con el ID proporcionado.</p>}
           
           </div>
-        )}
-      <Side city={eventCard.city} id={eventCard._id}/>
+           )} 
+          <Side city={eventCard.city} id={eventCard._id}/>
       </div>
     );
 };

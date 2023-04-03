@@ -7,7 +7,6 @@ const containerStyle = {
     width: '100%',
     opacity: '70%'
   };
-  
 
   function Map({center}) {
     
@@ -20,7 +19,7 @@ const containerStyle = {
 
   const onLoad = (map) => {
     const bounds = new window.google.maps.LatLngBounds({ lat: center.lat -0.02, lng: center.lng  -0.02 });
-    // Ajustar el zoom y la posición del mapa
+    // Ajustar el zoom y la posición del mapa (HACIA LA IZQUIERDA DEL MARKER)
     map.setZoom(12);
     map.panTo({ lat: center.lat -0.02, lng: center.lng  -0.02 });
     setMap(map);
@@ -38,8 +37,6 @@ const containerStyle = {
   return isLoaded ? (
       <GoogleMap
         mapContainerStyle={containerStyle}
- 
-
         onLoad={onLoad}
         onUnmount={onUnmount}
       >

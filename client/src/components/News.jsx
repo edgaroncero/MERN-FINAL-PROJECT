@@ -48,8 +48,8 @@ function News () {
   return (
    
       <div className="news-container">
-      <h2>Próximos Eventos</h2>
-      {filteredEvents.slice(0, 11).map(event => (
+        <div className="news-container-title"><h2>Próximos Eventos</h2></div>
+          {filteredEvents.slice(0, 12).map(event => (
           <div key={event._id} className="news">
             <div className='news-title'>{event.title} </div>
             <img className="news-img" src={event.img}/>
