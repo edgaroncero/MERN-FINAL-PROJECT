@@ -13,7 +13,7 @@ function Profile () {
     <div className="profile-main-container ">
         <div className="profile-container">
           <h2>{`Bienvenido/a ${name} ${lastname}!`}</h2>
-          <img src={imgProfile}/>
+          <img className="iconProfile" src={imgProfile}/>
           <Cart />
         </div>
     </div>
