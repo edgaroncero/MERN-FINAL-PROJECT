@@ -3,25 +3,27 @@
     flex-direction: column;
     align-items: center;
     background-color: white;
-    margin: 1.5rem;
 
   }
   
   .news-container {
-    display: grid;
-    grid-template-columns: repeat(1-fit, minmax(150px, 1fr));
     max-width: 600px;
-    margin: 1.5rem;
+    margin-left: 1.5rem;
     background-color: white;
+    margin-bottom: 10px;
     
   }
-  
+  .news-container-title{
+    max-width: 200px;
+    margin-left: 0;
+  }
   .news {
     position: relative;
     padding: 0.8rem;
     display: flex;
     flex-direction: column;
     background-position: center;
+
     max-width: 130px;
 
   }
@@ -39,7 +41,7 @@
     font-size: 0.9rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
-    z-index: 2;
+
     color: black; 
   }
   
@@ -67,7 +69,6 @@
     border-radius: 4px;
     cursor: pointer;
     background-color: black;
-    z-index: 1;
     top: -30%;
     left: 97%;
       }
@@ -78,4 +79,65 @@
     margin-bottom: 1rem;
     text-align: center;
 
+  }
+
+  @media screen and (min-width: 640px) and (max-width: 1280px) {
+    .map-news-container {
+      display: flex;
+      justify-content: center;
+    }
+    
+    .news-container {
+      max-width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 5fr));
+      grid-template-rows: repeat(auto-fit);
+      gap: 10px;
+      margin: 0;
+    }  
+    
+    .news-container-title {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .news {
+      margin: 10px;
+    }
+    
+    .news-img {
+      margin: 5px;
+      width: 100%;
+    }
+  }
+  @media screen and (max-width: 640px) {
+    .map-news-container {
+      display: flex;
+      justify-content: center;
+
+    }
+    .news-container {
+      max-width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
+      grid-template-rows: repeat(auto-fit);
+      gap: 5px;
+      margin: 0;
+      
+    }
+    .news{
+      margin: 10px;
+    }
+    .news-img{
+      margin: 5px;
+      width: 100%;
+    }
+    .news-container-title{
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }

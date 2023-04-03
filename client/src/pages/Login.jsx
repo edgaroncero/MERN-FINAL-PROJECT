@@ -4,7 +4,9 @@ import { useState, useEffect, useContext } from 'react'
 import { LoginContext } from '../context/login-context'
 import { useNavigate } from 'react-router-dom'
 import { useValidate } from '../hooks/form-validation'
-import jwt_decode from 'jwt-decode';
+
+
+import Test from '../components/Test'
 
 function Login () {
   const [email, setEmail] = useState('')
@@ -29,10 +31,11 @@ function Login () {
           const { token } = data.data
           const { name, lastname } = data.data.user
            localStorage.setItem('token', token)
+           localStorage.setItem('name', name)
+           localStorage.setItem('lastname', lastname)
            console.log(`Token recibido + ${token}`)
            setIsLogin(true)
-           setUserLogged(`${name} ${lastname}`)
-           navigate('/profile')
+           navigate('/')
 
            const getToken = localStorage.getItem('token')
         }
@@ -73,6 +76,7 @@ function Login () {
                 </div>
             </div>
          </div>
+
        </div>
   )
 }
