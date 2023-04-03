@@ -1,39 +1,70 @@
-import React, { useEffect, useState } from 'react';
-import '../styles/news.css';
-import { Link } from 'react-router-dom';
-import { getEventsApi } from '../services/events';
-import { useFilterNews } from '../hooks/News/filtered-news';
-import jwt_decode from 'jwt-decode';
+import { Arrow, dMoon, lMoon, Home, User} from '../config/icons-export'
+import { Link } from 'react-router-dom'
+import '../styles/component.styles.css'
+import { useContext, useState } from 'react'
+import { LoginContext } from '../context/login-context'
+import { useNavigate } from 'react-router-dom'
 
+function Navbar () {
 
-function News () {
- 
-  const [events, setEvents] = useState([])
-  const [filters, setFilters] = useState({
-    startDate: '',
-    endDate: ''
+  const { isLogin, setIsLogin } = useContext(LoginContext)
+  const navigate = useNavigate()
+
+const handleLogout = () => {
+  fetch('https://eventasia-server.vercel.app/users/logout', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
   })
- const { filteredNews } = useFilterNews({ events, filters })
-
-  useEffect(() => {
-    getEventsApi().then(data => setEvents(data))
-  },[])
+  .then(res => res.json())
+  .then(data => {
+    if (data) {
+      localStorage.removeItem('token')
+      setIsLogin(false)
+      navigate('/login')
+    } else {
+      throw new Error('Logout error')
+    }º
+  })
+  .catch(err => console.log(err))
+}
 
   return (
-   
-      <div className="news-container">
-      <h2>Próximos Eventos</h2>
-      {filteredNews.slice(0, 11).map(event => (
-          <div key={event._id} className="news">
-            <div className='news-title'>{event.title} </div>
-            <img className="news-img" src={event.img}/>
-              <Link to={`/event/${event._id}`}><button className="news-info-button">Info</button></Link>
-            <div className='news-location'>{event.city} {`${event.dtstart}`}</div>
-          </div>
-        ))}
-      </div>
-  );
-};
+      <header>
+        <div className='header-a'>
+          <Link to="/">
+            <button className='header-a_btn'>
+              <img src={Home}/>
+            </button> 
+          </Link>
+        </div> 
+        <div className='header-b'>   
+         
+          { isLogin ? (
+            <button onClick={() => handleLogout()}  className='header-a_btn'> {/* onClick={() => handleLogout()} */}
+              <h4>Logout</h4>
+           </button>
+          ) : (
+            <>
+            <Link to="/login">
+               <button className='header-a_btn'><h4>Sign In</h4></button>
+            </Link>
+            <Link to="/registrate">
+              <button className='header-a_btn'><h4>Sign Up</h4></button>
+            </Link>
+           </>
+          )}
+         
+           
+         { isLogin && (<Link to="/profile">
+           <button className='header-a_btn'>
+             <img src={User}/>
+           </button>
+         </Link>)} 
+        </div>    
+      </header>
+  )
+}
 
-
-export default News;
+export default Navbar
