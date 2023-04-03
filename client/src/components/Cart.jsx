@@ -70,8 +70,8 @@ const {userEvents, setUserEvents} = useContext(UserEventsContext)
         <div key={index} className="cart-item">
         
           <div
-            className="cart-item-image" style={{ backgroundImage: `url(${item.img})`}}>
-            <img className="cart-item-image" src={item.img}/>
+             className="cart-item-image">
+              <img src={item.img} alt={item.title} />
           </div>
           <div className="cart-item-details">
             <p className="cart-item-title">{item.title}</p>

@@ -35,7 +35,7 @@ function Profile () {
         <div className="profile-container">
           <h2>{`Bienvenido/a, ${userLogged}!`}</h2>
           <button onClick={handleLogout}> Logout </button>
-          <img src={imgProfile}/>
+          <img className="iconProfile" src={imgProfile}/>
           <Cart />
         </div>
     </div>

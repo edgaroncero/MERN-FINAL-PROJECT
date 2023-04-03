@@ -5,8 +5,7 @@
 .cart-item {
   display: flex;
   flex-direction: row;
-  height: 300px;
-  width: 700px;
+  height: 200px;
   justify-content: space-between;
   background-color: #ffffff;
   max-width: 100%;
@@ -17,26 +16,33 @@
 
 .cart-item-details {
   display: flex;
+  flex:100%;
   align-items: right;
   flex-direction: column;
   color: #000000;
-  width: 65%;
-  margin-bottom: 2rem; 
-  max-width: 100%;
+  margin-bottom: 0rem; 
+  max-width: 65%;
 }
   
 .cart-item-image {
-  flex: 1;
-  align-items: left;
-  object-fit:contain;
-  margin-bottom: 2rem;
-  max-width: 100%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  height: 300px;
-}
+    flex: 2;
+    align-items: center;
+    justify-content: center;
+    object-fit:cover;
+    height: 200px;
+    display: flex;
+    max-width: 35%;
+    overflow: hidden;
 
+  }
+
+  .cart-item-image img {
+    max-width: 100%;
+    height: auto;
+    object-fit:cover;
+
+  }
+  
 .cart-item-title {
   font-size: 1.5rem;
   font-weight: bold;
@@ -45,7 +51,7 @@
   
 .cart-item-category {
   font-size: 1.2rem;
-  margin-bottom: -1rem;
+  margin-bottom: -2rem;
 }
   
 .cart-item-location {
@@ -75,18 +81,12 @@
   border-radius: 4px;
   cursor: pointer;
   margin-top: auto;
-/*   align-items: center;
-  justify-content: center; */
   margin-left: 65%;
 }
 
 
 @media screen and (min-width: 640px) and (max-width: 1280px) {
-  .cart-container {
-    border: 50px solid white;
-    display: flex;
-    flex-wrap: wrap;
-  }
+
   .cart-item {
     width: 100%;
     flex-direction: column;
@@ -100,31 +100,60 @@
     margin-bottom: 1rem;
     padding: 1rem;
     max-width: 100%;
+    flex-direction: column;
   }
   .cart-item-image {
-    flex: 0 0 auto;
-    height: 200px;
-    max-width: 100%;
-    object-fit: contain;
-    margin-bottom: 0rem;
-    border: 1px solid black;
+    flex: 1;
+    object-fit:contain ;
     width: 100%;
-    align-items: left;
-    object-fit:contain;
+    flex-direction: column;
+    flex:2;
+    align-items: center;
+    justify-content: center;
+    object-fit:cover;
+    height: 200px;
+    display: flex;
+    max-width: 100%;
+
   }
 
-  .cart-item-button {
-    margin-left: 0;
-    margin-top: 1rem;
+  .cart-item-image img {
+      max-height: 500px;
+      max-width: 100%;
+      }
+    
   }
+
   .cart-item-price {
     margin-bottom: 1rem;
+    font-size: 1rem;
   }
-}
+
 .cart-item-title {
   font-size: 1.3rem;
   font-weight: bold;
+}
+
+.cart-item-category {
+  font-size: 1.2rem;
   margin-bottom: 0rem;
+}
+  
+.cart-item-location {
+  font-size: 0.9rem;
+  margin-bottom: 0rem;
+}
+  
+.cart-item-dates {
+  font-size: 0.9rem;
+  margin-bottom: 0rem;
+}
+.cart-item-button {
+  margin-left: 22rem;
+  margin-top: -4rem;
+  font-weight: bold;
+  padding: 0.2rem 0.8rem;
+  width: 25%;
 }
 
 @media screen and (max-width: 639px) {
@@ -132,40 +161,62 @@
     width: 100%;
     flex-direction: column;
     height: auto;
+
   }
 
   .cart-item-details {
-    width: 82%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 40%;
     border: 0px solid black;
-    margin-bottom: 1rem;
-    padding: 1rem;
+    padding:5rem;
+    align-items: center;
+
   }
   
   .cart-item-image {
-    height: 200px;
-    object-fit: cover;
-    margin-bottom: 1rem;
-    flex: 0 0 auto;
-    margin-bottom: 0rem;
-    border: 1px solid black;
-    width: 200px;
-    object-fit:contain;
-  }
+    max-height: 200px;
+    max-width: 100%;
+    }
   
   .cart-item-button {
-    margin-left: 0;
-    margin-top: 1rem;
+    margin-left: 1rem;
+    margin-top: 2rem;
     font-weight: bold;
-    padding: 0.2rem 0.3rem;
+    padding: 0.1rem 0rem;
     border: none;
-    width: 60%;
-    border-radius: 3px;
+    width: 100%;
+    border-radius: 0px;
     cursor: pointer;
-    margin-top: auto;
+    margin-top: 1rem;
+    margin-bottom: -1rem;
  
   }
   
   .cart-item-price {
+    margin-bottom: 1rem;
+    font-size: 0.7rem;
+  }
+
+  .cart-item-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+  
+  }
+
+  .cart-item-category {
+    font-size: 0.7rem;
+    margin-bottom: 1rem;
+  }
+    
+  .cart-item-location {
+    font-size: 0.7rem;
+    margin-bottom: 1rem;
+  }
+    
+  .cart-item-dates {
+    font-size: 0.7rem;
     margin-bottom: 1rem;
   }
 }
