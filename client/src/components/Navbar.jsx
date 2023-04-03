@@ -3,24 +3,32 @@ import { Link } from 'react-router-dom'
 import '../styles/component.styles.css'
 import { useContext, useState } from 'react'
 import { LoginContext } from '../context/login-context'
-
-//Chakra
-//import { IconButton } from "@chakra-ui/button";
-//import { useColorMode } from "@chakra-ui/color-mode";
-//import { FaSun, FaMoon } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom'
 
 function Navbar () {
-//  const [showCategories, setShowCategories] = useState(false)
-//  const [showCities, setShowCities] = useState(false)
- const {isLogin} = useContext(LoginContext)
 
-//  const handleShowCategories = () => setShowCategories(!showCategories)
-//  const handleShowCities = () => setShowCities(!showCities)
+  const { isLogin, setIsLogin } = useContext(LoginContext)
+  const navigate = useNavigate()
 
-   //Chkra
-//   const { colorMode, toggleColorMode } = useColorMode(); 
-//   const isDark = colorMode === "dark";
-
+const handleLogout = () => {
+  fetch('https://eventasia-server.vercel.app/users/logout', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data) {
+      localStorage.removeItem('token')
+      setIsLogin(false)
+      navigate('/login')
+    } else {
+      throw new Error('Logout error')
+    }º
+  })
+  .catch(err => console.log(err))
+}
 
   return (
       <header>
@@ -32,42 +40,28 @@ function Navbar () {
           </Link>
         </div> 
         <div className='header-b'>   
-          <Link>
-          <div className='btn-img'>
-             <button 
-             className='header-a_btn'
-             onClick={() => handleShowCategories()}
-             > 
-             <h4>Categorías</h4>
-             <img src={Arrow} /> 
-             </button> 
-          </div>
-          </Link>        
-          <Link>
-          <div className='btn-img'>
-             <button 
-             className='header-a_btn'
-             onClick={() => handleShowCities()}
-             >
-             <h4>Ciudades</h4>
-             <img src={Arrow} />
-             </button> 
-          </div>
-          </Link>  
-          <Link to="/login">
-            <button className='header-a_btn'><h4>Sign In</h4></button>
-         </Link>
-         <Link to="/registrate">
-           <button className='header-a_btn'><h4>Sign Up</h4></button>
-         </Link>
+         
+          { isLogin ? (
+            <button onClick={() => handleLogout()}  className='header-a_btn'> {/* onClick={() => handleLogout()} */}
+              <h4>Logout</h4>
+           </button>
+          ) : (
+            <>
+            <Link to="/login">
+               <button className='header-a_btn'><h4>Sign In</h4></button>
+            </Link>
+            <Link to="/registrate">
+              <button className='header-a_btn'><h4>Sign Up</h4></button>
+            </Link>
+           </>
+          )}
+         
+           
          { isLogin && (<Link to="/profile">
            <button className='header-a_btn'>
              <img src={User}/>
            </button>
-         </Link>)}
-         <button className='header-a_btn'>
-             <img src={dMoon}/>
-           </button>  
+         </Link>)} 
         </div>    
       </header>
   )
